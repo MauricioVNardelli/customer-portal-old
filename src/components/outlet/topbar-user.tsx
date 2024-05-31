@@ -1,40 +1,7 @@
-import { forwardRef } from 'react';
-import { IconChevronRight, IconLogout2, IconSettings } from '@tabler/icons-react';
-import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
+import { IconLogout2, IconSettings } from '@tabler/icons-react';
+import { Avatar, Menu } from '@mantine/core';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { destroyCookie } from 'nookies';
-
-interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  image: string;
-  name: string;
-  icon?: React.ReactNode;
-}
-
-const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ image, name, icon, ...others }: UserButtonProps, ref) => (
-    <UnstyledButton
-      ref={ref}
-      style={{
-        padding: 'var(--mantine-spacing-md)',
-        color: 'var(--mantine-color-text)',
-        borderRadius: 'var(--mantine-radius-sm)',
-      }}
-      {...others}
-    >
-      <Group>
-        <Avatar src={image} radius="xl" />
-
-        <div style={{ flex: 1 }}>
-          <Text size="sm" fw={500} className='text-white'>
-            {name}
-          </Text>
-        </div>
-
-        {icon || <IconChevronRight size="1rem" className='text-white' />}
-      </Group>
-    </UnstyledButton>
-  )
-);
 
 export function TopbarUser() {
 
@@ -49,10 +16,13 @@ export function TopbarUser() {
   return (
     <Menu>
       <Menu.Target>
-        <UserButton
-          image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"
-          name="Josemar Beulke"
-        />
+        <div id="topbar-user-icon" className='flex items-center max-w-28'>
+          <Avatar 
+            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"
+            className='hover:cursor-pointer hover:border-2'
+          />
+          <p className='text-white text-sm font-semibold hidden sm:block ml-4'>Josemar Beulke</p>
+        </div>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Usuário</Menu.Label>

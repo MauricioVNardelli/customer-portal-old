@@ -5,7 +5,7 @@ export function Sidebar() {
   return (
     <div>
       <div id='title-side-bar' className='flex h-10 justify-center items-center bg-slate-300 shadow'>
-        <h1 className='font-semibold'>Portal do Cliente</h1>
+        <h1 className='font-semibold'>Portal</h1>
       </div>
 
       <NavLink
