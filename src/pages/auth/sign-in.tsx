@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { setCookie } from "nookies";
-import { Button, TextInput, PasswordInput } from '@mantine/core';
-import { IconAt, IconLock } from '@tabler/icons-react'
+import { Button, TextInput, PasswordInput, Notification } from '@mantine/core';
+import { IconAt, IconInfoCircle, IconLock } from '@tabler/icons-react'
 import { Authenticate } from '@/api/app';
 import { useState } from 'react';
 import { useTimeout } from '@mantine/hooks';
@@ -50,8 +50,8 @@ export function SignIn() {
   return (
     <div className="flex flex-col items-center h-full pt-36">  
       <img src={logo} className="absolute w-24 rounded-xl shadow-lg -mt-12" />      
-      <div className="flex justify-center w-80 h-72 border shadow-md rounded-md pt-8">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center w-4/5 space-y-3">
+      <div className="flex flex-col items-center justify-center w-80 h-72 border shadow-md rounded-md pt-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-12 justify-center w-4/5 space-y-3">
           <TextInput
             {...register("email")} 
             className="w-full"
@@ -74,12 +74,23 @@ export function SignIn() {
             loading={isSubmitting} 
             loaderProps={{ type: 'dots' }} 
             className="w-full"
+            disabled={isSubmitting}
           >
             Entrar
           </Button>
-        </form>                
-      </div>
-      { errorAuth ? <h1>{errorAuth}</h1> : <></> }
+        </form>
+        <div id='message-error-login' className='flex justify-center items-center h-full w-full'>
+          { errorAuth 
+            ?
+            <div className='flex flex-row w-4/5 items-center'>
+              <IconInfoCircle className='text-red-500 mr-4' size={20} />
+              <h1 className=''>{errorAuth}</h1>
+            </div>
+            : 
+            <></>
+          }
+        </div>
+      </div>      
     </div>
   )
 }
