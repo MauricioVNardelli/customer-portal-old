@@ -10,7 +10,6 @@ export function TopbarUser() {
     destroyCookie(undefined, 'customer-portal.token', {});
   
     navigate("/");
-    //return <Navigate to="/" replace />;
   }
 
   return (

@@ -5,6 +5,7 @@ import { App } from './App.tsx'
 import { createTheme, MantineProvider } from '@mantine/core';
 
 import '@mantine/core/styles.css';
+import '@mantine/charts/styles.css';
 import './index.css';
 
 const theme = createTheme({

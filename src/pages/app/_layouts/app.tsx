@@ -18,15 +18,16 @@ export function LayoutApp() {
         <Topbar />
       </header>      
 
-      <div className="flex flex-row h-[calc(100%_-_4rem)]">
+      <div className="flex flex-row justify-center h-[calc(100%_-_4rem)]">
         <div id='side-bar' className="w-48 border-r">
           <Sidebar />
         </div>
 
-        <div id='content' className="h-full">
+        <div id='content' className="w-[calc(100%_-_12rem)] h-full">
           <Outlet />
         </div>
-      </div>      
+      </div>
+      
     </div>
   )
 }
