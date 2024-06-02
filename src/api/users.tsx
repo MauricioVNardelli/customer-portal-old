@@ -1,6 +1,5 @@
 import { sql } from '@vercel/postgres';
 import { IUser } from '@/lib/definitions';
-import bcrypt from 'bcryptjs';
 
 export async function GetUsers(): Promise<IUser[]> { 
   try {

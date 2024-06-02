@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { setCookie } from "nookies";
-import { Button, TextInput, PasswordInput, Notification } from '@mantine/core';
+import { Button, TextInput, PasswordInput } from '@mantine/core';
 import { IconAt, IconInfoCircle, IconLock } from '@tabler/icons-react'
 import { Authenticate } from '@/api/app';
 import { useState } from 'react';
