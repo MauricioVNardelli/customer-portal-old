@@ -4,12 +4,11 @@ import * as z from "zod"
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { setCookie } from "nookies";
 import { Button, TextInput, PasswordInput } from '@mantine/core';
 import { IconAt, IconInfoCircle, IconLock } from '@tabler/icons-react'
-import { Authenticate } from '@/api/app';
 import { useState } from 'react';
 import { useTimeout } from '@mantine/hooks';
+import { Authenticate } from '@/api/auth';
 
 const schema = z.object({
   email: z.string().email({message: "E-mail inválido"}),
@@ -40,17 +39,13 @@ export function SignIn() {
       return;
     }
 
-    setCookie(undefined, 'customer-portal.token', 'authorized', {
-      maxAge: 60 * 60 * 24, // 24 hour
-    });
-
     navigate('/app/dashboard');
   }
 
   return (
-    <div className="flex flex-col items-center h-full pt-36">  
+    <div className="flex flex-col items-center h-screen pt-36 bg-gradient-to-t from-slate-100 to-slate-200 ">  
       <img src={logo} className="absolute w-24 rounded-xl shadow-lg -mt-12" />      
-      <div className="flex flex-col items-center justify-center w-80 h-72 border shadow-md rounded-md pt-8">
+      <div className="flex flex-col items-center justify-center w-80 h-72 border shadow-md rounded-md pt-8 bg-white">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-12 justify-center w-4/5 space-y-3">
           <TextInput
             {...register("email")} 

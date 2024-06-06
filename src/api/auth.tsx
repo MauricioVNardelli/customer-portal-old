@@ -1,18 +1,15 @@
-import { sql } from '@vercel/postgres';
-import { IUser } from '@/lib/definitions';
 import bcrypt from 'bcryptjs';
- 
-interface IAPIResponse {
-  status: 200 | 401 | 404 | 500,
-  message: string
-}
 
-interface IAuthUser {
+import { ApiResponse, IUser } from "@/lib/definitions";
+import { sql } from "@vercel/postgres";
+import { setCookie } from 'nookies';
+
+export interface IAuthUser {
   email: string,
   password: string
 }
 
-export async function Authenticate(data: IAuthUser): Promise<IAPIResponse> { 
+export async function Authenticate(data: IAuthUser): Promise<ApiResponse> { 
   try {
     const res = await sql<IUser>
       `
@@ -40,9 +37,18 @@ export async function Authenticate(data: IAuthUser): Promise<IAPIResponse> {
       }
     }
 
+    setCookie(undefined, 'customer-portal.token', 'authorized', {
+      maxAge: 60 * 60 * 24, // 24 hour
+    });
+
+    setCookie(undefined, 'customer-portal.user', JSON.stringify(res.rows[0]) , {
+      maxAge: 60 * 60 * 24, // 24 hour
+    }); 
+
     return { status: 200, message: 'Sucesso!' }
-  } catch (error) {    
-    console.log(error);
+  
+  } catch (error) {
+
     return {
       status: 500,
       message: 'Erro desconhecido: ' + error

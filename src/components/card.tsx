@@ -22,7 +22,7 @@ export function CardValue(props: ICardValue) {
   const formattedValue = props.value.toLocaleString('pt-br', {minimumFractionDigits: 2});
 
   return (
-    <div id='card' className="flex flex-col border rounded-lg min-w-72 h-40 p-4 shadow-sm md:w-full">
+    <div id='card' className="flex flex-col border rounded-lg h-40 p-4 shadow-sm md:w-full">
       <div id='card-title' className="flex flex-row justify-between">
         <h1 className="left text-sm">{props.title}</h1>
         <IconChartLine className="text-slate-400 size-7" strokeWidth="1" />

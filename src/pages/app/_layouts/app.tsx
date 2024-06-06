@@ -1,33 +1,52 @@
 //import { Sidebar } from "@/components/ui/sidebar";
 import { Sidebar } from '@/components/sidebar'
 import { Topbar } from '@/components/topbar';
+import { useDisclosure } from '@mantine/hooks';
 import { parseCookies } from "nookies";
+import { createContext } from 'react';
 import { Navigate, Outlet } from "react-router-dom";
+
+type SidebarContextType = {
+  opened: boolean;
+  onToggle: () => void
+}
+
+export const SidebarContext = createContext({} as SidebarContextType)
 
 export function LayoutApp() {
   const cookies = parseCookies();
+  const [opened, { toggle }] = useDisclosure();
   const isAuthenticated = cookies['customer-portal.token'];
 
   if (!isAuthenticated) {
     return <Navigate to="/" replace />
   }
 
-  return (
-    <div id='layout-app' className="h-full">
-      <header id="top-bar" className="flex h-16 border-b w-full drop-shadow-md">
-        <Topbar />
-      </header>      
+  let classNameSideBar = " w-48 ";
+  let classNameContet = " ml-48 ";
 
-      <div className="flex flex-row justify-center h-[calc(100%_-_4rem)]">
-        <div id='side-bar' className="w-48 border-r">
+  if (!opened) {
+    classNameSideBar = " w-16 ";
+    classNameContet = " ml-16 ";
+  }
+
+  return (
+    <SidebarContext.Provider value={{ onToggle: toggle, opened: opened }}>
+      <div id='layout-app' className="flex flex-row h-full">
+        <div id='sidebar' className={"flex flex-col fixed h-full border-r shadow-md transition-all duration-200 ease-in " + classNameSideBar}>
           <Sidebar />
         </div>
 
-        <div id='content' className="w-[calc(100%_-_12rem)] h-full">
-          <Outlet />
-        </div>
+        <div className={"flex flex-col items-center w-full h-full transition-all duration-200 ease-in " + classNameContet}>
+          <Topbar />
+
+          <div id='content' className="h-full w-full">
+            <Outlet />
+          </div>
+        </div>      
       </div>
-      
-    </div>
+    </SidebarContext.Provider>
   )
 }
+
+//

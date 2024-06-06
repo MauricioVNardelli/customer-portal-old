@@ -1,12 +1,12 @@
 import { CardAreaChart, CardBarChart, CardDonutChart, CardValue } from "@/components/card";
-import { PageLayout } from "@/components/page";
+import { PageLayout } from "@/components/page-layout";
 //import { CardValue1, CardValue2, CardValue3, CardValue4 } from "./card-value";
 //import { CardGraph1, CardGraph2 } from "./card-graph";
 
 export function Dashboard() {
   return (
     <PageLayout>
-      <div className="grid grid-rows-4 gap-4 max-w-72 md:max-w-full md:grid-cols-2 md:grid-rows-none 2xl:grid-cols-4">
+      <div className="grid grid-rows-4 gap-4 md:max-w-full md:grid-cols-2 md:grid-rows-none xl:grid-cols-4">
         <CardValue title="Exemplo 1" value={200.32} />
         <CardValue title="Exemplo 2" value={1200.5} />
         <CardValue title="Exemplo 3" value={45758.21} />

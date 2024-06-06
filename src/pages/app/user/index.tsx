@@ -1,5 +1,5 @@
 import { GetUsers } from "@/api/users";
-import { PageLayout } from "@/components/page";
+import { PageLayout } from "@/components/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
 import { IUser } from "@/lib/definitions";
 import { useEffect, useState } from "react";

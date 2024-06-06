@@ -3,7 +3,7 @@ import { router } from '@/router'
 
 export function App() {
   return (
-    <div id="App" className="w-screen h-screen">
+    <div id="App" className="h-full">
       <RouterProvider router={router} />
     </div>
   )

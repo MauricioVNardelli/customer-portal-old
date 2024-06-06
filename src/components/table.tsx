@@ -1,4 +1,5 @@
 import { Table as TableMantine } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 export type dataHeaderTable = {
   field: string,
@@ -12,13 +13,24 @@ interface ITableProps {
   dataValues: any[]
 }
 
-export function Table(props: ITableProps) {  
+export function Table(props: ITableProps) {
+  const navigate = useNavigate();
+  const pathName = window.location.pathname;
+
+  function onDoubleClick(id: string) {    
+    navigate(`${pathName}/view/${id}`);
+  }
+  
   const header = props.dataHeader.map((element) => (
     <TableMantine.Th key={element.field}>{element.headerName}</TableMantine.Th>
   ))
 
   const rows = props.dataValues.map((elValue) => (
-    <TableMantine.Tr key={elValue['id']} className='hover:bg-sky-100'> 
+    <TableMantine.Tr 
+      key={elValue['id']} 
+      className='hover:bg-sky-100'
+      onDoubleClick={() => onDoubleClick(elValue['id'])}
+    > 
       { 
         props.dataHeader.map((elHeader, index) => (      
           <TableMantine.Td key={index}>{elValue[elHeader.field]}</TableMantine.Td>     
