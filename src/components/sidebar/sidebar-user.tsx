@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { destroyCookie } from 'nookies';
 import { useContext, useState } from 'react';
 import { ModalChangePassword } from '../topbar/modal-change-password';
-import { IUser } from '@/lib/definitions';
 import { GetSessionUser } from '@/lib/session';
 import { SidebarContext } from '@/pages/app/_layouts/app';
 
@@ -13,11 +12,10 @@ export function SidebarUser() {
   const [openModal, setOpenModal] = useState(false);
   const { opened } = useContext(SidebarContext);
   
-  const user: IUser = GetSessionUser();
+  const user = GetSessionUser();
   
   function ExitHandle() {
-    destroyCookie(undefined, 'customer-portal.token', {});
-    destroyCookie(undefined, 'customer-portal.user', {});
+    destroyCookie(undefined, "customer-portal.token");
   
     navigate("/");
   }

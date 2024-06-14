@@ -15,7 +15,7 @@ export const SidebarContext = createContext({} as SidebarContextType)
 
 export function LayoutApp() {
   const cookies = parseCookies();
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle }] = useDisclosure(true);
   const isAuthenticated = cookies['customer-portal.token'];
 
   if (!isAuthenticated) {
@@ -23,21 +23,22 @@ export function LayoutApp() {
   }
 
   let classNameSideBar = " w-48 ";
-  let classNameContet = " ml-48 ";
+  let classNameContent = " pl-48 ";
 
   if (!opened) {
     classNameSideBar = " w-16 ";
-    classNameContet = " ml-16 ";
+    classNameContent = " pl-16 ";
   }
 
   return (
     <SidebarContext.Provider value={{ onToggle: toggle, opened: opened }}>
       <div id='layout-app' className="flex flex-row h-full">
-        <div id='sidebar' className={"flex flex-col fixed h-full border-r shadow-md transition-all duration-200 ease-in " + classNameSideBar}>
+        
+        <div id='sidebar' className={"flex flex-col fixed h-full border-r shadow-md duration-300 " + classNameSideBar}>
           <Sidebar />
         </div>
 
-        <div className={"flex flex-col items-center w-full h-full transition-all duration-200 ease-in " + classNameContet}>
+        <div className={"flex flex-col items-center w-full h-full duration-300 " + classNameContent}>
           <Topbar />
 
           <div id='content' className="h-full w-full">

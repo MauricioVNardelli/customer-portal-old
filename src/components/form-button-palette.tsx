@@ -19,7 +19,7 @@ export function FormButtonPalette(props: FormButtonPaletteProps) {
           disabled={props.isSubmitting}
         >
           Salvar
-        </Button>      
+        </Button>
       </div>
     </div>
   )

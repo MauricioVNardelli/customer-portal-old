@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
 
       },
       {
-        path: '/app/user/view/:paramId',
+        path: '/app/user/view/:paramId?',
         element: <UserView />
       },
       {

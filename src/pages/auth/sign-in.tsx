@@ -30,26 +30,24 @@ export function SignIn() {
   });
 
   async function onSubmit (data: Schema) {
-    const res = await Authenticate(data);
     
-    if (res.status !== 200) {
-      setErrorAuth(res.message);
+    await Authenticate(data)
+    .then(() => {
+      navigate('/app/dashboard');
+    })
+    .catch((error: Error) => {
+      setErrorAuth(error.message);
       start();
-
-      return;
-    }
-
-    navigate('/app/dashboard');
+    });    
   }
 
   return (
-    <div className="flex flex-col items-center h-screen pt-36 bg-gradient-to-t from-slate-100 to-slate-200 ">  
+    <div className="flex flex-col items-center h-screen pt-36 bg-gradient-to-t from-slate-900 to-slate-950 ">  
       <img src={logo} className="absolute w-24 rounded-xl shadow-lg -mt-12" />      
-      <div className="flex flex-col items-center justify-center w-80 h-72 border shadow-md rounded-md pt-8 bg-white">
+      <div className="flex flex-col items-center justify-center w-80 h-72 shadow-lg shadow-black rounded-md pt-8 bg-gray-800">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-12 justify-center w-4/5 space-y-3">
           <TextInput
-            {...register("email")} 
-            className="w-full"
+            {...register("email")}
             placeholder="E-mail" 
             type="email" 
             leftSection={ <IconAt size={16} /> }
@@ -58,7 +56,7 @@ export function SignIn() {
           
           <PasswordInput 
             {...register("password")} 
-            className="w-full"
+            className=" bg-gray-600"
             placeholder="Senha" 
             type="password"
             leftSection={ <IconLock size={16} /> }
@@ -67,19 +65,19 @@ export function SignIn() {
           <Button 
             type="submit" 
             loading={isSubmitting} 
-            loaderProps={{ type: 'dots' }} 
-            className="w-full"
+            loaderProps={{ type: 'dots' }}
             disabled={isSubmitting}
           >
             Entrar
           </Button>
         </form>
         <div id='message-error-login' className='flex justify-center items-center h-full w-full'>
-          { errorAuth 
+          { 
+            errorAuth 
             ?
             <div className='flex flex-row w-4/5 items-center'>
               <IconInfoCircle className='text-red-500 mr-4' size={20} />
-              <h1 className=''>{errorAuth}</h1>
+              <h1 className='text-white'>{errorAuth}</h1>
             </div>
             : 
             <></>

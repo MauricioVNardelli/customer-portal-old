@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "seed": "node -r dotenv/config ./src/scripts/seed.cjs"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
@@ -16,20 +15,19 @@
     "@mantine/core": "^7.10.1",
     "@mantine/hooks": "^7.10.1",
     "@tabler/icons-react": "^3.5.0",
-    "@vercel/postgres": "^0.8.0",
     "antd": "^5.18.0",
-    "bcryptjs": "^2.4.3",
+    "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.5",
+    "react-jwt": "^1.2.1",
     "react-router-dom": "^6.23.1",
     "recharts": "^2.10.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.12.13",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

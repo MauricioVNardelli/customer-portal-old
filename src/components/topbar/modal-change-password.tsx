@@ -1,9 +1,7 @@
-import { GetSessionUser } from "@/lib/session";
 import { Button, PasswordInput } from "@mantine/core";
 import { IconInfoCircle, IconLock } from "@tabler/icons-react";
 import { FocusEvent, useState } from "react";
 import { useForm } from "react-hook-form";
-import bcrypt from 'bcryptjs';
 import { useTimeout } from "@mantine/hooks";
 
 type IInput = {
@@ -26,7 +24,6 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
   } = useForm<IInput>();
   const [correctPass, setCorrectPass] = useState(false);
   const { start } = useTimeout(() => clearErrors(), 3000);
-  const user = GetSessionUser();
 
   async function onSubmit (data: IInput) {
     if (data.newPassword != data.confirmPassword) {
@@ -40,7 +37,9 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
   }
 
   function onBlurPassword(event: FocusEvent<HTMLInputElement>) {
-    if (!bcrypt.compareSync(event.currentTarget.value, user.password)) {
+    event.preventDefault();
+
+    if (false) {
       setError('password', { type: 'passwordIncorrect', message: 'Senha incorreta' }, {shouldFocus: true});
       start();
 

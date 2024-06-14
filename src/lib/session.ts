@@ -1,9 +1,16 @@
 import { parseCookies } from "nookies";
-import { IUser } from "./definitions";
+import { decodeToken } from "react-jwt";
 
-export function GetSessionUser(): IUser {
+interface IPayloadToken {
+  email: string,
+  name: string
+}
+
+export function GetSessionUser(): IPayloadToken {
   const cookies = parseCookies();
-  const user: IUser = JSON.parse(cookies['customer-portal.user']);
+  const token = cookies['customer-portal.token'];
+  
+  const user = decodeToken(token) as IPayloadToken;
 
   return user;
 }
