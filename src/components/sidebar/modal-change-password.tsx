@@ -3,6 +3,9 @@ import { IconInfoCircle, IconLock } from "@tabler/icons-react";
 import { FocusEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTimeout } from "@mantine/hooks";
+import { GetSessionUser } from "@/lib/session";
+import { compare } from 'bcryptjs';
+import { UserAPI } from "@/api/users";
 
 type IInput = {
   password: string,
@@ -22,8 +25,13 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<IInput>();
+  
   const [correctPass, setCorrectPass] = useState(false);
   const { start } = useTimeout(() => clearErrors(), 3000);
+
+  const userSession = GetSessionUser();
+  const userAPI = new UserAPI;
+  
 
   async function onSubmit (data: IInput) {
     if (data.newPassword != data.confirmPassword) {
@@ -33,13 +41,18 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
       return;
     }
 
+    const user = await userAPI.Get(userSession.id);
+    user.password = data.newPassword;
+
+    userAPI.Update(userSession.id, user);
+
     props.setOpenModal(false);
   }
 
-  function onBlurPassword(event: FocusEvent<HTMLInputElement>) {
-    event.preventDefault();
+  async function onBlurPassword(event: FocusEvent<HTMLInputElement>) {
+    const comparePass = await compare(event.currentTarget.value, userSession.password);
 
-    if (false) {
+    if (!comparePass) {
       setError('password', { type: 'passwordIncorrect', message: 'Senha incorreta' }, {shouldFocus: true});
       start();
 

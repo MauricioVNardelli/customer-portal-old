@@ -1,29 +1,36 @@
 import { IUser } from '@/lib/definitions';
 import { api } from '@/services/api';
 
-export async function GetUsers(): Promise<IUser[]> { 
-  const response = await api.get('/user');
+const path = '/user';
 
-  return response.data;
-}
+export class UserAPI {
 
-export async function GetUser(prId: string | undefined): Promise<IUser> { 
-  const response = await api.get(`/user?id=${prId}`);
+  constructor() {
+    //
+  }
 
-  return response.data;
-}
-
-export async function CreateOrUpdateUser(prId: string | undefined, prUser: IUser): Promise<IUser> {  
-  let response;
+  async GetAll(): Promise<IUser[]> { 
+    const response = await api.get(path);
   
-  if (prId)
-    response = await api.put(`/user?id=${prId}`, prUser)
-  else
-    response = await api.post('/user', prUser);
+    return response.data;
+  }
+  
+  async Get(prId: string | undefined): Promise<IUser> { 
+    const response = await api.get(`${path}?id=${prId}`);
+  
+    return response.data;
+  }
+  
+  async Update(prId: string | undefined, prUser: IUser): Promise<IUser> {  
+    const response = await api.put(`${path}?id=${prId}`, prUser)
+  
+    return response.data;
+  }
 
-  return response.data;
-}
+  async Create(prUser: IUser): Promise<IUser> {  
+    const response = await api.post(path, prUser);
+  
+    return response.data;
+  }  
 
-export async function ChangePasswordUser() {
-  throw Error('Method not implemented');
 }

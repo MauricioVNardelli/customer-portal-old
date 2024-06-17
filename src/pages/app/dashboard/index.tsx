@@ -1,5 +1,5 @@
 import { CardAreaChart, CardBarChart, CardDonutChart, CardValue } from "@/components/card";
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/layout/page-layout";
 //import { CardValue1, CardValue2, CardValue3, CardValue4 } from "./card-value";
 //import { CardGraph1, CardGraph2 } from "./card-graph";
 

@@ -2,8 +2,11 @@ import { parseCookies } from "nookies";
 import { decodeToken } from "react-jwt";
 
 interface IPayloadToken {
+  id: string,
   email: string,
-  name: string
+  name: string,
+  password: string,
+  role: string
 }
 
 export function GetSessionUser(): IPayloadToken {

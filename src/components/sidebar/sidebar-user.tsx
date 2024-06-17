@@ -3,7 +3,7 @@ import { Avatar, Menu, Modal } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { destroyCookie } from 'nookies';
 import { useContext, useState } from 'react';
-import { ModalChangePassword } from '../topbar/modal-change-password';
+import { ModalChangePassword } from './modal-change-password';
 import { GetSessionUser } from '@/lib/session';
 import { SidebarContext } from '@/pages/app/_layouts/app';
 

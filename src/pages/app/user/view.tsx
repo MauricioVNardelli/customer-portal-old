@@ -1,15 +1,17 @@
 import * as z from "zod"
-import { PageLayout } from "@/components/page-layout";
+
+import { PageLayout } from "@/components/layout/page-layout";
+import { FormLayout } from "@/components/layout/form-layout";
+import { FormButtonPalette } from "@/components/layout/form-button-palette";
+import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
+
 import { PasswordInput, TextInput } from "@mantine/core";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
-import { CreateOrUpdateUser, GetUser } from "@/api/users";
 import { IUser } from "@/lib/definitions";
-import { FormLayout } from "@/components/form-layout";
-import { FormButtonPalette } from "@/components/form-button-palette";
-import { PageButtonPalette } from "@/components/page-buttons-palette";
 import { MyFormSelect } from "@/components/select";
+import { UserAPI } from "@/api/users";
 
 const schema = z.object({
   role: z.string(),
@@ -19,6 +21,7 @@ const schema = z.object({
 }).required();
 
 export function UserView() {
+  const userAPI = new UserAPI;
   const { paramId } = useParams();
   const navigate = useNavigate();
   
@@ -26,12 +29,15 @@ export function UserView() {
     resolver: zodResolver(schema),
     defaultValues: 
       async () => {
-        return await GetUser(paramId);        
+        return await userAPI.Get(paramId);        
       }
   });
 
   async function onSubmit (data: IUser) {
-    await CreateOrUpdateUser(paramId, data);
+    if (paramId)
+      await userAPI.Update(paramId, data)
+    else
+      await userAPI.Create(data);
 
     navigate('/app/user');
   }

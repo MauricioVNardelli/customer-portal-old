@@ -1,15 +1,16 @@
-import { GetUsers } from "@/api/users";
-import { PageButtonPalette } from "@/components/page-buttons-palette";
-import { PageLayout } from "@/components/page-layout";
+import { UserAPI } from "@/api/users";
+import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
+import { PageLayout } from "@/components/layout/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
 import { IUser } from "@/lib/definitions";
 import { useEffect, useState } from "react";
 
 export function User() {
   const [data, setData] = useState<IUser[]>();
+  const userAPI = new UserAPI;
 
   useEffect(() => {
-    const users = GetUsers();
+    const users = userAPI.GetAll();
     
     users.then((value) => {
       setData(value)

@@ -5,8 +5,8 @@ function getAPIClient(): AxiosInstance {
   const { 'customer-portal.token': token } = parseCookies()
 
   const api = axios.create({
-    //baseURL: 'http://localhost:3333'
-    baseURL: import.meta.env.VITE_BACKEND_URL
+    baseURL: 'http://localhost:3333'
+    //baseURL: import.meta.env.VITE_BACKEND_URL
   })
 
   if (token) {
