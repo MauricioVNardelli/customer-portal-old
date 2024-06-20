@@ -9,6 +9,7 @@ export interface IUser {
   email: string,
   password: string,
   role: string,
+  cpfcnpj: string,
   create_at: string,
   update_at: string
 }

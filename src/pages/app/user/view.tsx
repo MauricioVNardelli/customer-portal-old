@@ -18,6 +18,7 @@ const schema = z.object({
   name: z.string(),
   email: z.string().email({message: "E-mail inválido"}),
   password: z.string(),
+  cpfcnpj: z.string()
 }).required();
 
 export function UserView() {
@@ -50,15 +51,17 @@ export function UserView() {
         <FormProvider {...form}>
           <form 
             id='form-viewuser' 
-            className="grid grid-cols-2 gap-2"
+            className="grid grid-cols-4 gap-2"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <MyFormSelect label='Perfil' typeName="type_role" fieldName="role" />
-            <TextInput label='Nome' {...form.register("name")}/>
-            <TextInput label='E-mail' {...form.register("email")}/>
-            <PasswordInput label="Senha" {...form.register("password")} />
+            <TextInput label='Nome' {...form.register("name")} className="col-span-2"/>
+            <TextInput label='CPF/CNPJ' {...form.register("cpfcnpj")}/>
+            
+            <TextInput label='E-mail' {...form.register("email")} className="col-span-2"/>
+            <PasswordInput label="Senha" {...form.register("password")} className="col-span-2" />
 
-            <FormButtonPalette isSubmitting={form.formState.isSubmitting} className="col-span-2" />
+            <FormButtonPalette isSubmitting={form.formState.isSubmitting} className="col-span-4" />
           </form>
         </FormProvider>
       </FormLayout>
