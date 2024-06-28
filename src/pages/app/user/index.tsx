@@ -37,6 +37,6 @@ export function User() {
 const headerFields: dataHeaderTable[] = [
   { field: "role", headerName: "Perfil" },
   { field: "name", headerName: "Nome" },  
-  { field: "cpfcnpj", headerName: "CPF/CNPJ" },
+  { field: "cpfcnpj", headerName: "CPF" },
   { field: "email", headerName: "E-mail" }  
 ];

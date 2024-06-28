@@ -5,10 +5,11 @@ import { useFormContext } from "react-hook-form";
 
 interface ISelectProps extends NativeSelectProps{
   typeName: "type_role",
-  fieldName: string
+  fieldName: string,
+  isRequired?: boolean
 }
 
-export function MyFormSelect({ fieldName, typeName, ...otherProps }: ISelectProps) {
+export function SelectForm({ fieldName, typeName, ...otherProps }: ISelectProps) {  
   const { register } = useFormContext();
   const [data, setData] = useState<string[]>([]);
 
@@ -29,6 +30,4 @@ export function MyFormSelect({ fieldName, typeName, ...otherProps }: ISelectProp
       {...otherProps}
     />
   )
-
-  return (<></>)
 }
