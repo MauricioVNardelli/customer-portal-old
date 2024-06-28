@@ -2,13 +2,14 @@ import axios, { AxiosInstance } from "axios";
 import { parseCookies } from "nookies";
 
 function getAPIClient(): AxiosInstance {
-  const { 'customer-portal.token': token } = parseCookies()
+  const { 'customer-portal.token': token } = parseCookies();
 
   const api = axios.create({
     //baseURL: 'http://localhost:3333'
     baseURL: import.meta.env.VITE_BACKEND_URL
   })
 
+  console.log('tokeeen', token);
   if (token) {
     api.defaults.headers['Authorization'] = `Bearer ${token}`;
   }

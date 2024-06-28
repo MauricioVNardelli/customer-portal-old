@@ -15,6 +15,7 @@ export function SidebarUser() {
   const user = GetSessionUser();
   
   function ExitHandle() {
+    console.log('teste');
     destroyCookie(undefined, "customer-portal.token");
   
     navigate("/");

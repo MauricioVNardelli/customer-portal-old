@@ -23,6 +23,8 @@ export async function Authenticate(data: IAuthUser) {
     setCookie(undefined, 'customer-portal.token', data.token, {
       maxAge: 60 * 60 * 24, // 24 hour
     });
+    
+    api.defaults.headers['Authorization'] = `Bearer ${data.token}`;
   })
   .catch((error: AxiosError) => {
     const message = error.response?.data as IErrorAPI;
