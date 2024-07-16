@@ -15,10 +15,9 @@ interface IErrorAPI {
 }
 
 export async function Authenticate(data: IAuthUser) { 
-
   await api.post('/session', data)
   .then((response) => {
-    const data: IRes200 = response.data;
+    const data: IRes200 = response.data;    
 
     setCookie(undefined, 'customer-portal.token', data.token, {
       maxAge: 60 * 60 * 24, // 24 hour

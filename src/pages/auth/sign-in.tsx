@@ -2,13 +2,14 @@ import logo from '@/assets/coopermapp.png';
 import * as z from "zod"
 
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, TextInput, PasswordInput } from '@mantine/core';
 import { IconAt, IconInfoCircle, IconLock } from '@tabler/icons-react'
 import { useState } from 'react';
 import { useTimeout } from '@mantine/hooks';
 import { Authenticate } from '@/api/auth';
+import { setCookie } from 'nookies';
 
 const schema = z.object({
   email: z.string().email({message: "E-mail inválido"}),
@@ -19,6 +20,7 @@ type Schema = z.infer<typeof schema>
 
 export function SignIn() {
   const navigate = useNavigate();
+  const { clientId } = useParams();
   const [errorAuth, setErrorAuth] = useState("");
   const { start } = useTimeout(() => setErrorAuth(''), 3000);
   const {
@@ -30,9 +32,12 @@ export function SignIn() {
   });
 
   async function onSubmit (data: Schema) {
-    
     await Authenticate(data)
-    .then(() => {
+    .then(() => {      
+
+      if (clientId)
+        setCookie(undefined, 'customer-portal.clientId', clientId);
+
       navigate('/app/dashboard');
     })
     .catch((error: Error) => {
@@ -48,8 +53,8 @@ export function SignIn() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-12 justify-center w-4/5 space-y-3">
           <TextInput
             {...register("email")}
-            placeholder="E-mail" 
-            type="email" 
+            placeholder="E-mail"
+            type="email"
             leftSection={ <IconAt size={16} /> }
             error={errors.email?.message}
           />

@@ -1,7 +1,7 @@
 import { IconLogout2, IconSettings } from '@tabler/icons-react';
 import { Avatar, Menu, Modal } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { destroyCookie } from 'nookies';
+import { destroyCookie, parseCookies } from 'nookies';
 import { useContext, useState } from 'react';
 import { ModalChangePassword } from './modal-change-password';
 import { GetSessionUser } from '@/lib/session';
@@ -15,10 +15,12 @@ export function SidebarUser() {
   const user = GetSessionUser();
   
   function ExitHandle() {
-    console.log('teste');
-    destroyCookie(undefined, "customer-portal.token");
+    const cookies = parseCookies();
+    const clientId = cookies['customer-portal.clientId'];
+
+    destroyCookie(undefined, "customer-portal.token");    
   
-    navigate("/");
+    navigate("/auth/" + clientId);
   }
 
   let classNameUserName = "";

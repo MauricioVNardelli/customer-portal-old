@@ -14,4 +14,12 @@ export interface IUser {
   update_at: string
 }
 
+export interface IContract {
+  dateIssue: string,
+  motoristName: string,
+  documentNumber: string,
+  documentSeries: string,
+  documentPdfBase64: string
+}
+
 export type typeMask = "cep" | "cpf" | "cnpj" | "date" | "tel" | "cel" | undefined;

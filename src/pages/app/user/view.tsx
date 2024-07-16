@@ -4,6 +4,8 @@ import { PageLayout } from "@/components/layout/page-layout";
 import { FormLayout } from "@/components/layout/form-layout";
 import { FormButtonPalette } from "@/components/layout/form-button-palette";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
+import { InputForm } from "@/components/input-form";
+import { SelectForm } from "@/components/select-form";
 
 import { PasswordInput } from "@mantine/core";
 import { FormProvider, useForm } from "react-hook-form";
@@ -11,8 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import { IUser } from "@/lib/definitions";
 import { UserAPI } from "@/api/users";
-import { InputForm } from "@/components/input-form";
-import { SelectForm } from "@/components/select-form";
 
 const schema = z.object({
   role: z.string(),

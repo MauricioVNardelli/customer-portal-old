@@ -2,9 +2,8 @@
 import { Sidebar } from '@/components/sidebar'
 import { Topbar } from '@/components/topbar';
 import { useDisclosure } from '@mantine/hooks';
-import { parseCookies } from "nookies";
 import { createContext } from 'react';
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 type SidebarContextType = {
   opened: boolean;
@@ -14,13 +13,7 @@ type SidebarContextType = {
 export const SidebarContext = createContext({} as SidebarContextType)
 
 export function LayoutApp() {
-  const cookies = parseCookies();
   const [opened, { toggle }] = useDisclosure(true);
-  const isAuthenticated = cookies['customer-portal.token'];
-
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />
-  }
 
   let classNameSideBar = " w-48 ";
   let classNameContent = " pl-48 ";
