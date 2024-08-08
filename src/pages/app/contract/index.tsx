@@ -2,40 +2,44 @@ import { ContractAPI } from "@/api/contract";
 import { PageLayout } from "@/components/layout/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
 import { IContract } from "@/lib/definitions";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 export function Contract() {
   const [data, setData] = useState<IContract[]>();
-  const contractAPI = new ContractAPI();
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const contracts = contractAPI.GetAll();
-    
-    contracts.then((value) => {
-      setData(value)
-    })
+    if (error) setError("");
+
+    const contractAPI = new ContractAPI();
+    contractAPI
+      .GetAll()
+      .then((value) => {
+        setData(value);
+      })
+      .catch((err: AxiosError) => {
+        const errorMessage: string = err.code + " - " + err.message;
+
+        setError(errorMessage);
+      });
   }, []);
 
   return (
-    <PageLayout>      
-      { 
-        data 
-        ?
-        <Table 
-          dataHeader={headerFields} 
-          dataValues={data}
-        />
-        :
-        <p>Carregando...</p>
-      }
+    <PageLayout title="RECIBO DE REPASSE">
+      {data ? (
+        <Table dataHeader={headerFields} dataValues={data} />
+      ) : (
+        <p>{error ? error : "Carregando..."}</p>
+      )}
     </PageLayout>
-  )
+  );
 }
 
 const headerFields: dataHeaderTable[] = [
   { field: "dateIssue", headerName: "Emissão" },
-  { field: "motoristName", headerName: "Motorista" },  
+  { field: "motoristName", headerName: "Motorista" },
   { field: "documentNumber", headerName: "Número" },
   { field: "documentSeries", headerName: "Série" },
-  { field: "", headerName: "PDF", icon: "printer" }
+  { field: "", headerName: "PDF", icon: "printer" },
 ];

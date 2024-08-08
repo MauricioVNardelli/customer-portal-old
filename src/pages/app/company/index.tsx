@@ -1,19 +1,19 @@
-import { UserAPI } from "@/api/users";
+import { CompanyAPI } from "@/api/company";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
 import { PageLayout } from "@/components/layout/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
-import { IResponseErrorData, IUser } from "@/lib/definitions";
+import { IResponseErrorData, ICompany } from "@/lib/definitions";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
-export function User() {
-  const [data, setData] = useState<IUser[]>();
+export function Company() {
+  const [data, setData] = useState<ICompany[]>();
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (error) setError("");
 
-    const userAPI = new UserAPI();
+    const userAPI = new CompanyAPI();
     userAPI
       .GetAll()
       .then((value) => {
@@ -33,9 +33,11 @@ export function User() {
   }, []);
 
   return (
-    <PageLayout title="USUÁRIO">
+    <PageLayout title="EMPRESA">
       <PageButtonPalette
-        buttons={[{ name: "Incluir", color: "gray", src: "/app/user/view/" }]}
+        buttons={[
+          { name: "Incluir", color: "gray", src: "/app/company/view/" },
+        ]}
       />
       {data ? (
         <Table dataHeader={headerFields} dataValues={data} />
@@ -47,8 +49,7 @@ export function User() {
 }
 
 const headerFields: dataHeaderTable[] = [
-  { field: "role", headerName: "Perfil" },
+  { field: "code", headerName: "Código" },
   { field: "name", headerName: "Nome" },
-  { field: "status", headerName: "Situação" },
-  { field: "email", headerName: "E-mail" },
+  { field: "cnpj", headerName: "CNPJ" },
 ];
