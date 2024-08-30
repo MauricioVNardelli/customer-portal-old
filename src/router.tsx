@@ -16,13 +16,13 @@ import { CompanyView } from "./pages/app/company/view";
 
 export const router = createBrowserRouter([
   {
-    path: "/auth/:companyCode",
-    element: <SignIn />,
-  },
-  {
     path: "/",
     element: <IsAuthenticated />,
     children: [
+      {
+        path: "/auth/:companyCode",
+        element: <SignIn />,
+      },
       {
         path: "/app",
         element: <LayoutApp />,
@@ -68,10 +68,16 @@ function IsAuthenticated() {
 
   const companyCodeValue = companyCodeParam || companyCode;
 
-  if (!isAuthenticated)
+  if (!isAuthenticated && companyCode)
     return <Navigate to={`/auth/${companyCodeValue}`} replace />;
 
-  if (location.pathname == "/" || location.pathname == "/app")
+  if (!isAuthenticated) return <Outlet />;
+
+  if (
+    location.pathname == "/" ||
+    location.pathname == "/app" ||
+    location.pathname.startsWith("/auth")
+  )
     return <Navigate to="/app/dashboard" replace />;
   else return <Outlet />;
 }

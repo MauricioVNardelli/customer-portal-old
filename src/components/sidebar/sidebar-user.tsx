@@ -11,10 +11,10 @@ export function SidebarUser() {
   const [openModal, setOpenModal] = useState(false);
   const { isOpenSidebar } = useContext(SidebarContext);
 
-  const userName = sessionStorage.getItem("userName");
+  const userName = localStorage.getItem("userName");
 
   function ExitHandle() {
-    const companyCode = sessionStorage.getItem("companyCode");
+    const companyCode = localStorage.getItem("companyCode");
 
     destroyCookie(undefined, "customer-portal.auth");
 

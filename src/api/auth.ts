@@ -47,9 +47,9 @@ export async function Authenticate(data: IAuthUser) {
 
         setCookie(undefined, "customer-portal.auth", "true");
 
-        sessionStorage.clear();
-        sessionStorage.setItem("userName", decoded.user.name);
-        sessionStorage.setItem("companyCode", data.companyCode);
+        localStorage.clear();
+        localStorage.setItem("userName", decoded.user.name);
+        localStorage.setItem("companyCode", data.companyCode);
 
         api.defaults.headers[
           "Authorization"

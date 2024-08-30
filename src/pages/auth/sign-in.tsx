@@ -56,7 +56,7 @@ export function SignIn() {
         </div>
       </div>
 
-      <div className="w-full min-[1101px]:max-w-[560px]">
+      <div className="w-full min-[1101px]:max-w-[560px] shadow-lg shadow-slate-600">
         <div className="flex flex-col justify-center pt-20 px-10 md:pt-48 md:px-20 w-full">
           <h1 className="text-slate-400 text-xl font-bold pb-8">
             Acesse sua conta
