@@ -3,19 +3,18 @@ import { IconInfoCircle, IconLock } from "@tabler/icons-react";
 import { FocusEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTimeout } from "@mantine/hooks";
-import { GetSessionUser } from "@/lib/session";
-import { compare } from 'bcryptjs';
+import { compare } from "bcryptjs";
 import { UserAPI } from "@/api/users";
 
 type IInput = {
-  password: string,
-  newPassword: string,
-  confirmPassword: string
-}
+  password: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 type ModalChangePasswordProps = {
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
-}
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 export function ModalChangePassword(props: ModalChangePasswordProps) {
   const {
@@ -25,35 +24,44 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<IInput>();
-  
+
   const [correctPass, setCorrectPass] = useState(false);
   const { start } = useTimeout(() => clearErrors(), 3000);
 
-  const userSession = GetSessionUser();
-  const userAPI = new UserAPI;
-  
+  const userAPI = new UserAPI();
 
-  async function onSubmit (data: IInput) {
+  async function onSubmit(data: IInput) {
     if (data.newPassword != data.confirmPassword) {
-      setError('newPassword', { type: 'passwordIncorrect', message: 'As senhas não conferem' }, {shouldFocus: true});
+      setError(
+        "newPassword",
+        { type: "passwordIncorrect", message: "As senhas não conferem" },
+        { shouldFocus: true }
+      );
       start();
 
       return;
     }
 
-    const user = await userAPI.Get(userSession.id);
+    const user = await userAPI.Get("userSession.id");
     user.password = data.newPassword;
 
-    userAPI.Update(userSession.id, user);
+    userAPI.Update("userSession.id", user);
 
     props.setOpenModal(false);
   }
 
   async function onBlurPassword(event: FocusEvent<HTMLInputElement>) {
-    const comparePass = await compare(event.currentTarget.value, userSession.password);
+    const comparePass = await compare(
+      event.currentTarget.value,
+      "userSession.password"
+    );
 
     if (!comparePass) {
-      setError('password', { type: 'passwordIncorrect', message: 'Senha incorreta' }, {shouldFocus: true});
+      setError(
+        "password",
+        { type: "passwordIncorrect", message: "Senha incorreta" },
+        { shouldFocus: true }
+      );
       start();
 
       return;
@@ -63,57 +71,56 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
   }
 
   return (
-    <div>
-      <form className="" onSubmit={handleSubmit(onSubmit)}>
-        <PasswordInput 
-          {...register("password")} 
+    <div className="">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <PasswordInput
+          {...register("password")}
           className="w-full mb-4"
-          placeholder="Senha atual" 
+          placeholder="Senha atual"
           type="password"
-          leftSection={ <IconLock size={16} /> }
+          leftSection={<IconLock size={16} />}
           onBlur={onBlurPassword}
           error={errors.password?.message}
           disabled={correctPass}
         />
 
-        <PasswordInput 
-          {...register("newPassword")} 
+        <PasswordInput
+          {...register("newPassword")}
           className="w-full mb-4"
-          placeholder="Nova senha" 
+          placeholder="Nova senha"
           type="password"
-          leftSection={ <IconLock size={16} /> }
+          leftSection={<IconLock size={16} />}
           disabled={!correctPass}
         />
 
         <PasswordInput
-          {...register("confirmPassword")} 
+          {...register("confirmPassword")}
           className="w-full mb-4"
-          placeholder="Confirmar senha" 
+          placeholder="Confirmar senha"
           type="password"
-          leftSection={ <IconLock size={16} /> }
+          leftSection={<IconLock size={16} />}
           disabled={!correctPass}
-        />        
-        
+        />
+
         <Button
-          type="submit" 
-          loading={isSubmitting} 
-          loaderProps={{ type: 'dots' }} 
+          type="submit"
+          loading={isSubmitting}
+          loaderProps={{ type: "dots" }}
           className="w-full bg-gray-800 enabled:hover:bg-gray-700"
           disabled={isSubmitting || !correctPass}
         >
           Alterar
         </Button>
 
-        { errors.newPassword?.message
-          ?
-          <div className='flex flex-row items-center my-4'>
-            <IconInfoCircle className='text-red-500 mr-4' size={20} />
-            <h1 className=''>{errors.newPassword?.message}</h1>
+        {errors.newPassword?.message ? (
+          <div className="flex flex-row items-center my-4">
+            <IconInfoCircle className="text-red-500 mr-4" size={20} />
+            <h1 className="">{errors.newPassword?.message}</h1>
           </div>
-          : 
+        ) : (
           <></>
-          }
+        )}
       </form>
     </div>
-  )
+  );
 }

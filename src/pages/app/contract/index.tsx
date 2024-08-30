@@ -30,7 +30,7 @@ export function Contract() {
       {data ? (
         <Table dataHeader={headerFields} dataValues={data} />
       ) : (
-        <p>{error ? error : "Carregando..."}</p>
+        <p className="dark:text-gray-200">{error ? error : "Carregando..."}</p>
       )}
     </PageLayout>
   );

@@ -1,33 +1,73 @@
-import { IAuthUser } from "@/lib/definitions";
-import { setCookie } from 'nookies';
-import { api } from '@/services/api';
+import { setCookie } from "nookies";
+import { api } from "@/services/api";
 import { AxiosError } from "axios";
+import { jwtDecode } from "jwt-decode";
+import jwtEncode from "jwt-encode";
 
-interface IRes200 {
-  id: string,
-  name: string,
-  email: string,
-  token: string
+interface IErrorAPIJoi {
+  message: [
+    {
+      message: string;
+    }
+  ];
 }
 
-interface IErrorAPI {
-  error?: string
+interface IAuthUser {
+  email: string;
+  password: string;
+  companyCode: string;
 }
 
-export async function Authenticate(data: IAuthUser) { 
-  await api.post('/session', data)
-  .then((response) => {
-    const data: IRes200 = response.data;    
+type PayloadJWT = {
+  user: {
+    companyCode: string;
+    email: string;
+    name: string;
+  };
+};
 
-    setCookie(undefined, 'customer-portal.token', data.token, {
-      maxAge: 60 * 60 * 24, // 24 hour
-    });
-    
-    api.defaults.headers['Authorization'] = `Bearer ${data.token}`;
-  })
-  .catch((error: AxiosError) => {
-    const message = error.response?.data as IErrorAPI;
+export async function Authenticate(data: IAuthUser) {
+  try {
+    const response = await api.post("/auth/user", data);
+    const responseAuth = response.data as {
+      sessionKey: string;
+    };
 
-    throw new Error(message.error);
-  })
+    const jwt = jwtEncode({}, import.meta.env.VITE_SECRET_KEY);
+
+    await api
+      .get(`/auth/user/session/${responseAuth.sessionKey}`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+      .then((prResponseSession) => {
+        const responseSession = prResponseSession.data as { token: string };
+        const decoded = jwtDecode(responseSession.token) as PayloadJWT;
+
+        setCookie(undefined, "customer-portal.auth", "true");
+
+        sessionStorage.clear();
+        sessionStorage.setItem("userName", decoded.user.name);
+        sessionStorage.setItem("companyCode", data.companyCode);
+
+        api.defaults.headers[
+          "Authorization"
+        ] = `Bearer ${responseSession.token}`;
+      });
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      const data = error.response?.data as { message: string | [] };
+
+      if (Array.isArray(data.message)) {
+        const response = error.response?.data as IErrorAPIJoi;
+
+        throw new Error(response.message[0].message);
+      }
+
+      const response = error.response?.data as { message: string };
+
+      throw new Error(response.message);
+    }
+  }
 }

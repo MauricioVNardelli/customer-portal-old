@@ -25,7 +25,7 @@ export function Table(props: ITableProps) {
   const pathName = window.location.pathname;
 
   function onDoubleClick(id: string) {
-    navigate(`${pathName}/view/${id}`);
+    if (id) navigate(`${pathName}/view/${id}`);
   }
 
   async function onPrintClick() {
@@ -45,13 +45,15 @@ export function Table(props: ITableProps) {
   }
 
   const header = props.dataHeader.map((element) => (
-    <TableMantine.Th key={element.field}>{element.headerName}</TableMantine.Th>
+    <TableMantine.Th className="dark:text-gray-200" key={element.field}>
+      {element.headerName}
+    </TableMantine.Th>
   ));
 
   const rows = props.dataValues.map((elValue) => (
     <TableMantine.Tr
       key={elValue["id"]}
-      className="hover:bg-sky-100"
+      className="hover:bg-sky-100 dark:hover:bg-gray-800 dark:bg-slate-900 dark:text-gray-200"
       onDoubleClick={() => onDoubleClick(elValue["id"])}
     >
       {props.dataHeader.map((elHeader, index) => (
@@ -61,7 +63,7 @@ export function Table(props: ITableProps) {
         >
           {elHeader.icon ? (
             <IconPrinter
-              className="text-gray-700 cursor-pointer"
+              className="text-gray-700 cursor-pointer dark:text-gray-400"
               onClick={onPrintClick}
             />
           ) : (
