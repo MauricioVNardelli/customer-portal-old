@@ -57,11 +57,7 @@ export function CompanyView() {
               size={"lg"}
               title="Logo"
               className="col-span-2 cursor-pointer"
-              src={
-                form.getValues("code") == 7
-                  ? "https://scontent.fcfc2-1.fna.fbcdn.net/v/t39.30808-1/280548234_103816932333505_7353671780007260029_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=f4b9fd&_nc_ohc=VmpQqAevwrAQ7kNvgH5Xxrb&_nc_ht=scontent.fcfc2-1.fna&oh=00_AYCghMExZ3lT73sLg1UgOPQMBbzKffZ2431Ex9yrQw5CvQ&oe=66BA73F8"
-                  : ""
-              }
+              src="https://scontent.fcfc2-1.fna.fbcdn.net/v/t39.30808-1/280548234_103816932333505_7353671780007260029_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=f4b9fd&_nc_ohc=VmpQqAevwrAQ7kNvgH5Xxrb&_nc_ht=scontent.fcfc2-1.fna&oh=00_AYCghMExZ3lT73sLg1UgOPQMBbzKffZ2431Ex9yrQw5CvQ&oe=66BA73F8"
               onClick={() => {
                 //
               }}
