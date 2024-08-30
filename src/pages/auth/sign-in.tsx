@@ -1,94 +1,101 @@
-import logo from '@/assets/coopermapp.png';
-import * as z from "zod"
+import logo from "@/assets/coopermapp.png";
+import * as z from "zod";
 
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, TextInput, PasswordInput } from '@mantine/core';
-import { IconAt, IconInfoCircle, IconLock } from '@tabler/icons-react'
-import { useState } from 'react';
-import { useTimeout } from '@mantine/hooks';
-import { Authenticate } from '@/api/auth';
-import { setCookie } from 'nookies';
+import { Authenticate } from "@/api/auth";
+import { Input } from "@/components/input";
+import { Button } from "@/components/button";
+import { toast } from "sonner";
 
-const schema = z.object({
-  email: z.string().email({message: "E-mail inválido"}),
-  password: z.string(),
-}).required();
+const schema = z
+  .object({
+    email: z.string().email({ message: "E-mail inválido" }),
+    password: z
+      .string()
+      .min(8, { message: "A senha deverá conter no mínimo 8 caracteres" }),
+  })
+  .required();
 
-type Schema = z.infer<typeof schema>
+type Schema = z.infer<typeof schema>;
 
 export function SignIn() {
   const navigate = useNavigate();
-  const { clientId } = useParams();
-  const [errorAuth, setErrorAuth] = useState("");
-  const { start } = useTimeout(() => setErrorAuth(''), 3000);
+  const { companyCode } = useParams();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<Schema>({
     resolver: zodResolver(schema),
   });
 
-  async function onSubmit (data: Schema) {
-    await Authenticate(data)
-    .then(() => {      
+  async function onSubmit(data: Schema) {
+    try {
+      const companyCodeStr = companyCode as string;
+      await Authenticate({ ...data, companyCode: companyCodeStr });
 
-      if (clientId)
-        setCookie(undefined, 'customer-portal.clientId', clientId);
-
-      navigate('/app/dashboard');
-    })
-    .catch((error: Error) => {
-      setErrorAuth(error.message);
-      start();
-    });    
+      navigate("/app/dashboard");
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message);
+    }
   }
 
   return (
-    <div className="flex flex-col items-center h-screen pt-36 bg-gradient-to-t from-slate-900 to-slate-950 ">  
-      <img src={logo} className="absolute w-24 rounded-xl shadow-lg -mt-12" />      
-      <div className="flex flex-col items-center justify-center w-80 h-72 shadow-lg shadow-black rounded-md pt-8 bg-gray-800">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col mt-12 justify-center w-4/5 space-y-3">
-          <TextInput
-            {...register("email")}
-            placeholder="E-mail"
-            type="email"
-            leftSection={ <IconAt size={16} /> }
-            error={errors.email?.message}
+    <div className="flex h-screen bg-gradient-to-t from-slate-900 to-slate-950">
+      <div className="w-full hidden min-[1101px]:block ">
+        <div
+          id="content-logo"
+          className="flex items-center justify-center w-full h-full bg-white dark:bg-slate-800"
+        >
+          <img
+            src={logo}
+            className="w-24 h-24 rounded-xl shadow-lg shadow-slate-800"
           />
-          
-          <PasswordInput 
-            {...register("password")} 
-            className=" bg-gray-600"
-            placeholder="Senha" 
-            type="password"
-            leftSection={ <IconLock size={16} /> }
-          />
-          
-          <Button 
-            type="submit" 
-            loading={isSubmitting} 
-            loaderProps={{ type: 'dots' }}
-            disabled={isSubmitting}
-          >
-            Entrar
-          </Button>
-        </form>
-        <div id='message-error-login' className='flex justify-center items-center h-full w-full'>
-          { 
-            errorAuth 
-            ?
-            <div className='flex flex-row w-4/5 items-center'>
-              <IconInfoCircle className='text-red-500 mr-4' size={20} />
-              <h1 className='text-white'>{errorAuth}</h1>
-            </div>
-            : 
-            <></>
-          }
         </div>
-      </div>      
+      </div>
+
+      <div className="w-full min-[1101px]:max-w-[560px]">
+        <div className="flex flex-col justify-center pt-20 px-10 md:pt-48 md:px-20 w-full">
+          <h1 className="text-slate-400 text-xl font-bold pb-8">
+            Acesse sua conta
+          </h1>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col w-full"
+          >
+            <Input
+              placeholder="Usuário"
+              className="h-14 mb-4"
+              {...register("email")}
+            />
+
+            <Input
+              placeholder="Senha"
+              type="password"
+              className="h-14"
+              errorMessage={errors.password?.message}
+              {...register("password")}
+            />
+
+            <a
+              href=""
+              className="mt-2 mb-4 transition-colors text-purple-800 hover:text-purple-900"
+            >
+              Esqueci minha senha
+            </a>
+
+            <Button
+              type="submit"
+              isLoaling={isSubmitting}
+              className="rounded-lg h-14 shadow-md transition-colors font-bold text-slate-300 bg-purple-800 hover:bg-purple-900"
+            >
+              Entrar
+            </Button>
+          </form>
+        </div>
+      </div>
     </div>
-  )
+  );
 }

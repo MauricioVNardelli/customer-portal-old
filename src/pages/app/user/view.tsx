@@ -4,7 +4,6 @@ import { PageLayout } from "@/components/layout/page-layout";
 import { FormLayout } from "@/components/layout/form-layout";
 import { FormButtonPalette } from "@/components/layout/form-button-palette";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
-import { InputForm } from "@/components/input-form";
 import { SelectForm } from "@/components/select-form";
 
 import { FormProvider, useForm } from "react-hook-form";
@@ -16,6 +15,7 @@ import { constStatus } from "@/lib/constants";
 import { Modal, PasswordInput } from "@mantine/core";
 import { useState } from "react";
 import { AxiosError } from "axios";
+import { Input } from "@/components/input";
 
 const schemaUpdate = z
   .object({
@@ -88,13 +88,14 @@ export function UserView() {
             className="grid grid-cols-4 gap-2"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <InputForm
+            <Input
               label="Nome"
-              fieldName="name"
-              error={form.formState.errors.name?.message}
               className="col-span-2"
+              //error={form.formState.errors.name?.message}
+              {...form.register("name")}
             />
-            <InputForm label="CPF" fieldName="cpfcnpj" mask="cpf" />
+
+            <Input label="CPF" mask="cpf" {...form.register("cpfcnpj")} />
 
             <SelectForm
               label="Perfil"
@@ -102,11 +103,11 @@ export function UserView() {
               data={["ADMIN", "USER"]}
             />
 
-            <InputForm
+            <Input
               label="E-mail"
-              fieldName="email"
               className="col-span-2"
-              error={form.formState.errors.email?.message}
+              errorMessage={form.formState.errors.email?.message}
+              {...form.register("email")}
             />
 
             <SelectForm

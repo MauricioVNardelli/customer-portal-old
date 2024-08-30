@@ -6,31 +6,30 @@ import { useMaskito } from "@maskito/react";
 import { useFormContext } from "react-hook-form";
 
 interface IInputForm extends TextInputProps {
-  fieldName: string,
-  isRequired?: boolean,
-  mask?: typeMask
+  fieldName: string;
+  isRequired?: boolean;
+  mask?: typeMask;
 }
 
-export function InputForm({ fieldName, mask, ...otherProps }: IInputForm) {  
+export function InputForm({ fieldName, mask, ...otherProps }: IInputForm) {
   const { register } = useFormContext();
   const { ref: refRegister, ...otherRefRegister } = register(fieldName);
 
   const digitsOnlyMask: MaskitoOptions = {
-    mask: getMask(mask)
-  }
+    mask: getMask(mask),
+  };
 
-  const inputRef = useMaskito({options: digitsOnlyMask});
-  
+  const inputRef = useMaskito({ options: digitsOnlyMask });
+
   return (
     <TextInput
-      ref={el => {
+      ref={(el) => {
         refRegister(el);
-        
-        if (mask)
-          inputRef(el)
+
+        if (mask) inputRef(el);
       }}
       {...otherRefRegister}
       {...otherProps}
     />
-  )
+  );
 }

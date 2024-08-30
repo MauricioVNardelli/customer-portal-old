@@ -4,13 +4,13 @@ import { PageLayout } from "@/components/layout/page-layout";
 import { FormLayout } from "@/components/layout/form-layout";
 import { FormButtonPalette } from "@/components/layout/form-button-palette";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
-import { InputForm } from "@/components/input-form";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import { ICompany } from "@/lib/definitions";
 import { CompanyAPI } from "@/api/company";
 import { Avatar } from "@mantine/core";
+import { Input } from "@/components/input";
 
 const schema = z
   .object({
@@ -68,8 +68,8 @@ export function CompanyView() {
             ></Avatar>
 
             <div className="grid grid-cols-2 gap-2 w-full mt-4">
-              <InputForm label="Nome" fieldName="name" />
-              <InputForm label="CNPJ" fieldName="cnpj" mask="cnpj" />
+              <Input label="Nome" {...form.register("name")} />
+              <Input label="CNPJ" mask="cnpj" {...form.register("cnpj")} />
             </div>
 
             <FormButtonPalette

@@ -1,8 +1,3 @@
-export interface IAuthUser {
-  email: string;
-  password: string;
-}
-
 export interface IUser {
   id: string;
   name: string;
@@ -26,7 +21,7 @@ export interface IContract {
 
 export interface ICompany {
   id: string;
-  code: number;
+  code: string;
   name: string;
   image: string;
   cnpj: string;

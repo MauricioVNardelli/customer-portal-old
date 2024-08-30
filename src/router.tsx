@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, useParams } from "react-router-dom";
 
 import { LayoutApp } from "@/pages/app/_layouts/app";
 import { PageNotFound } from "@/pages/error/404";
@@ -16,7 +16,7 @@ import { CompanyView } from "./pages/app/company/view";
 
 export const router = createBrowserRouter([
   {
-    path: "/auth/:clientId",
+    path: "/auth/:companyCode",
     element: <SignIn />,
   },
   {
@@ -61,9 +61,15 @@ export const router = createBrowserRouter([
 function IsAuthenticated() {
   const location = useLocation();
   const cookies = parseCookies();
-  const isAuthenticated = cookies["customer-portal.token"];
+  const { companyCodeParam } = useParams();
 
-  if (!isAuthenticated) return <Navigate to="/auth/1" replace />;
+  const isAuthenticated = cookies["customer-portal.auth"];
+  const companyCode = sessionStorage.getItem("companyCode");
+
+  const companyCodeValue = companyCodeParam || companyCode;
+
+  if (!isAuthenticated)
+    return <Navigate to={`/auth/${companyCodeValue}`} replace />;
 
   if (location.pathname == "/" || location.pathname == "/app")
     return <Navigate to="/app/dashboard" replace />;

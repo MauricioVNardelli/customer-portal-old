@@ -25,6 +25,11 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "others/sidebar-nav.tsx"],
+  "include": [
+    "src",
+    "others/sidebar-nav.tsx",
+    "others/sign-in.tsx",
+    "others/sidebar"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

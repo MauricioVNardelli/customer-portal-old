@@ -2,55 +2,52 @@ import clsx from "clsx";
 
 import { Sidebar } from "@/components/sidebar";
 import { Topbar } from "@/components/topbar";
-import { useDisclosure } from "@mantine/hooks";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 type SidebarContextType = {
-  opened: boolean;
-  onToggle: () => void;
+  isOpenSidebar: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const SidebarContext = createContext({} as SidebarContextType);
 
 export function LayoutApp() {
-  const [opened, { toggle }] = useDisclosure(true);
-
-  let widthSideBar = " w-48 ";
-  let plContent = " pl-48 ";
-
-  if (!opened) {
-    widthSideBar = " w-16 ";
-    plContent = " pl-16 ";
-  }
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
-    <SidebarContext.Provider value={{ onToggle: toggle, opened: opened }}>
-      <div id="layout-app" className="flex flex-row h-full">
-        <div
-          id="sidebar"
-          className={clsx(
-            "flex flex-col fixed h-full border-r shadow-md duration-300",
-            widthSideBar
-          )}
+    <div id="layout-app">
+      <div
+        id="layout-app-left"
+        className={clsx(
+          "fixed h-full border-r shadow-md duration-300 dark:border-slate-600",
+          sidebarOpen ? "w-56" : "w-20"
+        )}
+      >
+        <SidebarContext.Provider
+          value={{ isOpenSidebar: sidebarOpen, setSidebarOpen: setSidebarOpen }}
         >
           <Sidebar />
-        </div>
+        </SidebarContext.Provider>
+      </div>
+
+      <div
+        id="layout-app-right"
+        className={clsx(
+          "flex flex-col w-full duration-300",
+          sidebarOpen ? "pl-56" : "pl-20"
+        )}
+      >
+        <Topbar />
 
         <div
-          className={clsx(
-            "flex flex-col items-center w-full h-full duration-300",
-            plContent
-          )}
+          id="content"
+          className="min-h-[calc(100vh-3rem)] w-full dark:bg-gradient-to-t from-slate-900 to-slate-950"
         >
-          <Topbar />
-
-          <div id="content" className="h-full w-full">
-            <Outlet />
-          </div>
+          <Outlet />
         </div>
       </div>
-    </SidebarContext.Provider>
+    </div>
   );
 }
 
