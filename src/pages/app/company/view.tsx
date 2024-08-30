@@ -9,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import { ICompany } from "@/lib/definitions";
 import { CompanyAPI } from "@/api/company";
-import { Avatar } from "@mantine/core";
 import { Input } from "@/components/input";
 
 const schema = z
@@ -51,18 +50,6 @@ export function CompanyView() {
             className="flex flex-col items-center"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <Avatar
-              color="dark"
-              radius="sm"
-              size={"lg"}
-              title="Logo"
-              className="col-span-2 cursor-pointer"
-              src="https://scontent.fcfc2-1.fna.fbcdn.net/v/t39.30808-1/280548234_103816932333505_7353671780007260029_n.jpg?stp=dst-jpg_p200x200&_nc_cat=105&ccb=1-7&_nc_sid=f4b9fd&_nc_ohc=VmpQqAevwrAQ7kNvgH5Xxrb&_nc_ht=scontent.fcfc2-1.fna&oh=00_AYCghMExZ3lT73sLg1UgOPQMBbzKffZ2431Ex9yrQw5CvQ&oe=66BA73F8"
-              onClick={() => {
-                //
-              }}
-            ></Avatar>
-
             <div className="grid grid-cols-2 gap-2 w-full mt-4">
               <Input label="Nome" {...form.register("name")} />
               <Input label="CNPJ" mask="cnpj" {...form.register("cnpj")} />

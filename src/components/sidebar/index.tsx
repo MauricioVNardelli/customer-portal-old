@@ -47,7 +47,7 @@ export function Sidebar() {
 
   function getListMenu(prListMenu: menu[]): React.ReactNode {
     return prListMenu.map((value) => (
-      <li className="pt-2" key={value.name}>
+      <li className="pt-2 " key={value.name} title={value.name}>
         <Link
           to={value.src}
           className={clsx(

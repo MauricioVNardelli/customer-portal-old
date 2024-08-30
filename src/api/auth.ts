@@ -45,11 +45,11 @@ export async function Authenticate(data: IAuthUser) {
         const responseSession = prResponseSession.data as { token: string };
         const decoded = jwtDecode(responseSession.token) as PayloadJWT;
 
-        setCookie(undefined, "customer-portal.auth", "true");
-
         localStorage.clear();
         localStorage.setItem("userName", decoded.user.name);
         localStorage.setItem("companyCode", data.companyCode);
+
+        setCookie(undefined, "customer-portal.auth", "true");
 
         api.defaults.headers[
           "Authorization"

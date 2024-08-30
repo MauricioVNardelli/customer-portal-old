@@ -15,7 +15,7 @@ export class CompanyAPI {
   }
 
   async Get(prId: string | undefined): Promise<ICompany> {
-    const response = await api.get(`${path}?id=${prId}`);
+    const response = await api.get(`${path}/${prId}`);
 
     return response.data;
   }
