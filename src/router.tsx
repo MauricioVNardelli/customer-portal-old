@@ -9,10 +9,10 @@ import { Contract } from "@/pages/app/contract";
 
 import { User } from "@/pages/app/user";
 import { UserView } from "./pages/app/user/view";
-import { parseCookies } from "nookies";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Company } from "./pages/app/company";
 import { CompanyView } from "./pages/app/company/view";
+import { useCookies } from "react-cookie";
 
 export const router = createBrowserRouter([
   {
@@ -60,24 +60,24 @@ export const router = createBrowserRouter([
 
 function IsAuthenticated() {
   const location = useLocation();
-  const cookies = parseCookies();
+  const [cookies, ,] = useCookies(["auth"]);
   const { companyCodeParam } = useParams();
 
-  const isAuthenticated = cookies["customer-portal.auth"];
+  const isAuthenticated = cookies.auth;
   const companyCode = sessionStorage.getItem("companyCode");
 
   const companyCodeValue = companyCodeParam || companyCode;
 
-  if (!isAuthenticated && companyCode)
+  if (!isAuthenticated && !location.pathname.startsWith("/auth"))
     return <Navigate to={`/auth/${companyCodeValue}`} replace />;
 
-  if (!isAuthenticated) return <Outlet />;
-
   if (
-    location.pathname == "/" ||
-    location.pathname == "/app" ||
-    location.pathname.startsWith("/auth")
+    isAuthenticated &&
+    (location.pathname == "/" ||
+      location.pathname == "/app" ||
+      location.pathname.startsWith("/auth"))
   )
     return <Navigate to="/app/dashboard" replace />;
-  else return <Outlet />;
+
+  return <Outlet />;
 }

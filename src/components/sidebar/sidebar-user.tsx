@@ -1,13 +1,14 @@
 import { IconLogout2 } from "@tabler/icons-react";
 import { Avatar, Menu, Modal } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { destroyCookie } from "nookies";
 import { useContext, useState } from "react";
 import { ModalChangePassword } from "./modal-change-password";
 import { SidebarContext } from "@/pages/app/_layouts/app";
+import { useCookies } from "react-cookie";
 
 export function SidebarUser() {
   const navigate = useNavigate();
+  const [, , removeCookie] = useCookies(["auth"]);
   const [openModal, setOpenModal] = useState(false);
   const { isOpenSidebar } = useContext(SidebarContext);
 
@@ -16,7 +17,8 @@ export function SidebarUser() {
   function ExitHandle() {
     const companyCode = localStorage.getItem("companyCode");
 
-    destroyCookie(undefined, "customer-portal.auth");
+    localStorage.clear();
+    removeCookie("auth");
 
     navigate("/auth/" + companyCode);
   }

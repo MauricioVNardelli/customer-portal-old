@@ -1,8 +1,8 @@
-import { setCookie } from "nookies";
+import jwtEncode from "jwt-encode";
+
 import { api } from "@/services/api";
 import { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
-import jwtEncode from "jwt-encode";
 
 interface IErrorAPIJoi {
   message: [
@@ -48,8 +48,6 @@ export async function Authenticate(data: IAuthUser) {
         localStorage.clear();
         localStorage.setItem("userName", decoded.user.name);
         localStorage.setItem("companyCode", data.companyCode);
-
-        setCookie(undefined, "customer-portal.auth", "true");
 
         api.defaults.headers[
           "Authorization"
