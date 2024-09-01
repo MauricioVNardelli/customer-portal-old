@@ -9,6 +9,7 @@ import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 import { toast } from "sonner";
 import { useCookies } from "react-cookie";
+import { useEffect } from "react";
 
 const schema = z
   .object({
@@ -32,6 +33,13 @@ export function SignIn() {
   } = useForm<Schema>({
     resolver: zodResolver(schema),
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("companyCode"))
+      localStorage.removeItem("companyCode");
+
+    if (companyCode) localStorage.setItem("companyCode", companyCode);
+  }, [companyCode]);
 
   async function onSubmit(data: Schema) {
     const companyCodeStr = companyCode as string;
