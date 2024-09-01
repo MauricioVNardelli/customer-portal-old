@@ -27,6 +27,7 @@ type PayloadJWT = {
 };
 
 export async function Authenticate(data: IAuthUser) {
+  let decoded = {} as PayloadJWT;
   try {
     const response = await api.post("/auth/user", data);
     const responseAuth = response.data as {
@@ -43,16 +44,16 @@ export async function Authenticate(data: IAuthUser) {
       })
       .then((prResponseSession) => {
         const responseSession = prResponseSession.data as { token: string };
-        const decoded = jwtDecode(responseSession.token) as PayloadJWT;
-
-        localStorage.clear();
-        localStorage.setItem("userName", decoded.user.name);
-        localStorage.setItem("companyCode", data.companyCode);
+        decoded = jwtDecode(responseSession.token) as PayloadJWT;
 
         api.defaults.headers[
           "Authorization"
         ] = `Bearer ${responseSession.token}`;
       });
+
+    localStorage.clear();
+    localStorage.setItem("userName", decoded.user.name);
+    localStorage.setItem("companyCode", data.companyCode);
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
       const data = error.response?.data as { message: string | [] };
