@@ -47,9 +47,18 @@ export function SignIn() {
     expiresDate.setDate(expiresDate.getDate() + 1);
 
     try {
-      await Authenticate({ ...data, companyCode: companyCodeStr });
+      const response = await Authenticate({
+        ...data,
+        companyCode: companyCodeStr,
+      });
 
+      console.log("response", response);
       setCookie("auth", "true", { expires: expiresDate });
+
+      if (localStorage.getItem("userName")) localStorage.removeItem("userName");
+
+      if (response?.user) localStorage.setItem("userName", response.user.name);
+
       navigate("/app/dashboard");
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
