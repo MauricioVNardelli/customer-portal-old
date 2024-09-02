@@ -47,9 +47,6 @@ export async function Authenticate(
         const responseSession = prResponseSession.data as { token: string };
         const payload = jwtDecode(responseSession.token) as PayloadJWT;
 
-        console.log("payload", payload);
-        console.log("user", payload.user.name);
-
         api.defaults.headers[
           "Authorization"
         ] = `Bearer ${responseSession.token}`;

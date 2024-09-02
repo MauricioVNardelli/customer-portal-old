@@ -52,7 +52,6 @@ export function SignIn() {
         companyCode: companyCodeStr,
       });
 
-      console.log("response", response);
       setCookie("auth", "true", { expires: expiresDate });
 
       if (localStorage.getItem("userName")) localStorage.removeItem("userName");
