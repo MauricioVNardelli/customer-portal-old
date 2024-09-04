@@ -8,8 +8,8 @@ import { Authenticate } from "@/api/auth";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 import { toast } from "sonner";
-import { useCookies } from "react-cookie";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { AppContext } from "@/contexts/app-context";
 
 const schema = z
   .object({
@@ -25,7 +25,8 @@ type Schema = z.infer<typeof schema>;
 export function SignIn() {
   const navigate = useNavigate();
   const { companyCode } = useParams();
-  const [, setCookie] = useCookies(["auth"]);
+  const { SignIn: SignInCtx } = useContext(AppContext);
+
   const {
     register,
     handleSubmit,
@@ -34,31 +35,15 @@ export function SignIn() {
     resolver: zodResolver(schema),
   });
 
-  useEffect(() => {
-    if (localStorage.getItem("companyCode"))
-      localStorage.removeItem("companyCode");
-
-    if (companyCode) localStorage.setItem("companyCode", companyCode);
-  }, [companyCode]);
-
   async function onSubmit(data: Schema) {
-    const companyCodeStr = companyCode as string;
-    const expiresDate = new Date();
-    expiresDate.setDate(expiresDate.getDate() + 1);
-
     try {
-      const response = await Authenticate({
-        ...data,
-        companyCode: companyCodeStr,
-      });
+      const response = await Authenticate(data, companyCode as string);
 
-      setCookie("auth", "true", { expires: expiresDate });
+      if (response?.token) {
+        SignInCtx(response.token);
 
-      if (localStorage.getItem("userName")) localStorage.removeItem("userName");
-
-      if (response?.user) localStorage.setItem("userName", response.user.name);
-
-      navigate("/app/dashboard");
+        navigate("/app/dashboard");
+      }
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);
     }

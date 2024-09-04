@@ -10,18 +10,23 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ICompany } from "@/lib/definitions";
 import { CompanyAPI } from "@/api/company";
 import { Input } from "@/components/input";
+import { useState } from "react";
+import { AxiosError } from "axios";
 
 const schema = z
   .object({
     name: z.string(),
     cnpj: z.string(),
+    code: z.string(),
   })
   .required();
 
 export function CompanyView() {
   const companyAPI = new CompanyAPI();
+
   const { paramId } = useParams();
   const navigate = useNavigate();
+  const [error, setError] = useState<string>();
 
   const form = useForm<ICompany>({
     resolver: zodResolver(schema),
@@ -31,10 +36,20 @@ export function CompanyView() {
   });
 
   async function onSubmit(data: ICompany) {
-    if (paramId) await companyAPI.Update(paramId, data);
-    else await companyAPI.Create(data);
+    const dataUpdate = {
+      name: data.name,
+      code: data.code,
+    };
 
-    navigate("/app/company");
+    try {
+      if (paramId) await companyAPI.Update(paramId, dataUpdate);
+      else await companyAPI.Create(data);
+
+      navigate("/app/company");
+    } catch (err: unknown) {
+      if (err instanceof AxiosError) setError(err.response?.data.message);
+      else setError("Erro não definido");
+    }
   }
 
   return (
@@ -43,7 +58,7 @@ export function CompanyView() {
         buttons={[{ name: "Voltar", color: "gray", src: "/app/company" }]}
       />
 
-      <FormLayout>
+      <FormLayout messageError={error} funcClearError={setError}>
         <FormProvider {...form}>
           <form
             id="form-viewuser"
@@ -52,7 +67,12 @@ export function CompanyView() {
           >
             <div className="grid grid-cols-2 gap-2 w-full mt-4">
               <Input label="Nome" {...form.register("name")} />
-              <Input label="CNPJ" mask="cnpj" {...form.register("cnpj")} />
+              <Input
+                disabled
+                label="CNPJ"
+                mask="cnpj"
+                {...form.register("cnpj")}
+              />
             </div>
 
             <FormButtonPalette

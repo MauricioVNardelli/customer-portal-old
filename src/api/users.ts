@@ -9,19 +9,20 @@ export class UserAPI {
   }
 
   async GetAll(): Promise<IUser[]> {
-    const response = await api.get(path);
+    const companyId = localStorage.getItem("companyCode");
+    const response = await api.get("/company/" + companyId + "/users");
 
     return response.data;
   }
 
   async Get(prId: string | undefined): Promise<IUser> {
-    const response = await api.get(`${path}?id=${prId}`);
+    const response = await api.get(`${path}/${prId}`);
 
     return response.data;
   }
 
   async Update(prId: string | undefined, prUser: IUser): Promise<IUser> {
-    const response = await api.put(`${path}?id=${prId}`, prUser);
+    const response = await api.patch(`${path}/${prId}`, prUser);
 
     return response.data;
   }

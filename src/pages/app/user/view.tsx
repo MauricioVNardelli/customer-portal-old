@@ -4,7 +4,8 @@ import { PageLayout } from "@/components/layout/page-layout";
 import { FormLayout } from "@/components/layout/form-layout";
 import { FormButtonPalette } from "@/components/layout/form-button-palette";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
-import { SelectForm } from "@/components/select-form";
+import { Input } from "@/components/input";
+import { Select } from "@/components/select";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,18 +13,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IResponseErrorData, IUser } from "@/lib/definitions";
 import { UserAPI } from "@/api/users";
 import { constStatus } from "@/lib/constants";
-import { Modal, PasswordInput } from "@mantine/core";
+import { PasswordInput } from "@mantine/core";
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { Input } from "@/components/input";
 
 const schemaUpdate = z
   .object({
     role: z.string(),
     name: z.string(),
     email: z.string().email({ message: "E-mail inválido" }),
-    cpfcnpj: z.string(),
+    cpf: z.string(),
     status: z.string(),
+    companyId: z.string(),
+    companyCode: z.string(),
   })
   .required();
 
@@ -32,9 +34,11 @@ const schemaCreate = z
     role: z.string(),
     name: z.string(),
     email: z.string().email({ message: "E-mail inválido" }),
-    cpfcnpj: z.string(),
+    cpf: z.string(),
     status: z.string(),
     password: z.string(),
+    companyId: z.string(),
+    companyCode: z.string(),
   })
   .required();
 
@@ -61,17 +65,25 @@ export function UserView() {
   async function onSubmit(data: IUser) {
     let descriptionError = "";
 
+    const dataUpdate = {
+      name: data.name,
+      cpf: data.cpf,
+      role: data.role,
+      status: data.status,
+      companyId: data.companyId,
+    };
+
     try {
-      if (paramId) await userAPI.Update(paramId, data);
+      if (paramId) await userAPI.Update(paramId, dataUpdate);
       else await userAPI.Create(data);
     } catch (err) {
       if (err instanceof AxiosError) {
         const data = err.response?.data as IResponseErrorData;
-        descriptionError = data.error;
+        descriptionError = data.message[0].message;
       }
     }
 
-    if (!descriptionError) navigate("/app/user");
+    if (descriptionError == "") navigate("/app/user");
     else setError(descriptionError);
   }
 
@@ -81,7 +93,7 @@ export function UserView() {
         buttons={[{ name: "Voltar", color: "gray", src: "/app/user" }]}
       />
 
-      <FormLayout>
+      <FormLayout messageError={error} funcClearError={setError}>
         <FormProvider {...form}>
           <form
             id="form-viewuser"
@@ -95,27 +107,28 @@ export function UserView() {
               {...form.register("name")}
             />
 
-            <Input label="CPF" mask="cpf" {...form.register("cpfcnpj")} />
+            <Input label="CPF" mask="cpf" {...form.register("cpf")} />
 
-            <SelectForm
+            <Select
               label="Perfil"
-              fieldName="role"
               data={["ADMIN", "USER"]}
+              {...form.register("role")}
             />
 
             <Input
               label="E-mail"
               className="col-span-2"
+              disabled
               errorMessage={form.formState.errors.email?.message}
               {...form.register("email")}
             />
 
-            <SelectForm
+            <Select
               label="Situação"
-              fieldName="status"
               data={constStatus}
               disabled={!paramId}
               className="col-span-2"
+              {...form.register("status")}
             />
 
             {!paramId ? (
@@ -135,14 +148,6 @@ export function UserView() {
           </form>
         </FormProvider>
       </FormLayout>
-
-      <Modal
-        opened={error != ""}
-        onClose={() => setError("")}
-        withCloseButton={false}
-      >
-        {error}
-      </Modal>
     </PageLayout>
   );
 }

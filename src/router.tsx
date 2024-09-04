@@ -1,4 +1,10 @@
-import { createBrowserRouter, useParams } from "react-router-dom";
+import {
+  createBrowserRouter,
+  useParams,
+  Navigate,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 
 import { LayoutApp } from "@/pages/app/_layouts/app";
 import { PageNotFound } from "@/pages/error/404";
@@ -9,10 +15,10 @@ import { Contract } from "@/pages/app/contract";
 
 import { User } from "@/pages/app/user";
 import { UserView } from "./pages/app/user/view";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Company } from "./pages/app/company";
 import { CompanyView } from "./pages/app/company/view";
-import { useCookies } from "react-cookie";
+import { useContext } from "react";
+import { AppContext } from "./contexts/app-context";
 
 export const router = createBrowserRouter([
   {
@@ -60,16 +66,14 @@ export const router = createBrowserRouter([
 
 function IsAuthenticated() {
   const location = useLocation();
-  const [cookies, ,] = useCookies(["auth"]);
-  const { companyCodeParam } = useParams();
+  const { companyCode } = useParams();
+  const { isAuthenticated } = useContext(AppContext);
+  const companyCodeStorage = sessionStorage.getItem("companyCode");
+  const companyCodeValue = companyCode || companyCodeStorage;
 
-  const isAuthenticated = cookies.auth;
-  const companyCode = sessionStorage.getItem("companyCode");
-
-  const companyCodeValue = companyCodeParam || companyCode;
-
-  if (!isAuthenticated && !location.pathname.startsWith("/auth"))
+  if (!isAuthenticated && !location.pathname.startsWith("/auth")) {
     return <Navigate to={`/auth/${companyCodeValue}`} replace />;
+  }
 
   if (
     isAuthenticated &&

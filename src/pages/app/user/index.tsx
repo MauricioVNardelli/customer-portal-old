@@ -25,7 +25,7 @@ export function User() {
         if (err.response?.data) {
           const errData = err.response.data as IResponseErrorData;
 
-          errorMessage += " - Error: " + errData.error;
+          errorMessage += " - Error: " + errData.message[0].message;
         }
 
         setError(errorMessage);

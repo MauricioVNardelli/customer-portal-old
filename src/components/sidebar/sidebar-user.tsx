@@ -4,21 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ModalChangePassword } from "./modal-change-password";
 import { SidebarContext } from "@/pages/app/_layouts/app";
-import { useCookies } from "react-cookie";
+import { AppContext } from "@/contexts/app-context";
 
 export function SidebarUser() {
   const navigate = useNavigate();
-  const [, , removeCookie] = useCookies(["auth"]);
+
   const [openModal, setOpenModal] = useState(false);
   const { isOpenSidebar } = useContext(SidebarContext);
-
-  const userName = localStorage.getItem("userName");
+  const { SignOut, user } = useContext(AppContext);
 
   function ExitHandle() {
     const companyCode = localStorage.getItem("companyCode");
-
     localStorage.clear();
-    removeCookie("auth");
+
+    SignOut();
 
     navigate("/auth/" + companyCode);
   }
@@ -50,7 +49,7 @@ export function SidebarUser() {
                 "text-black text-sm font-semibold ml-4 " + classNameUserName
               }
             >
-              {userName}
+              {user?.name}
             </p>
           </div>
         </Menu.Target>

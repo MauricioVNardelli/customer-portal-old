@@ -1,10 +1,11 @@
+import { AxiosError } from "axios";
+import { useEffect, useState } from "react";
+
 import { CompanyAPI } from "@/api/company";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
 import { PageLayout } from "@/components/layout/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
 import { IResponseErrorData, ICompany } from "@/lib/definitions";
-import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
 
 export function Company() {
   const [data, setData] = useState<ICompany[]>();
@@ -20,12 +21,12 @@ export function Company() {
         setData(value);
       })
       .catch((err: AxiosError) => {
-        let errorMessage: string = err.code + " - " + err.message;
+        let errorMessage = err.code + " - " + err.message;
 
         if (err.response?.data) {
           const errData = err.response.data as IResponseErrorData;
 
-          errorMessage += " - Error: " + errData.error;
+          errorMessage += " - Error: " + errData.message[0].message;
         }
 
         setError(errorMessage);

@@ -20,11 +20,8 @@ export class CompanyAPI {
     return response.data;
   }
 
-  async Update(
-    prId: string | undefined,
-    prCompany: ICompany
-  ): Promise<ICompany> {
-    const response = await api.put(`${path}?id=${prId}`, prCompany);
+  async Update(prId: string | undefined, prData: ICompany): Promise<ICompany> {
+    const response = await api.patch(`${path}/${prId}`, prData);
 
     return response.data;
   }

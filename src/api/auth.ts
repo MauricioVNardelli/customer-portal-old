@@ -2,7 +2,6 @@ import jwtEncode from "jwt-encode";
 
 import { api } from "@/services/api";
 import { AxiosError } from "axios";
-import { jwtDecode } from "jwt-decode";
 
 interface IErrorAPIJoi {
   message: [
@@ -12,25 +11,21 @@ interface IErrorAPIJoi {
   ];
 }
 
-interface IAuthUser {
+interface IDataAuthUser {
   email: string;
   password: string;
-  companyCode: string;
 }
 
-type PayloadJWT = {
-  user: {
-    companyCode: string;
-    email: string;
-    name: string;
-  };
-};
-
 export async function Authenticate(
-  data: IAuthUser
-): Promise<PayloadJWT | undefined> {
+  data: IDataAuthUser,
+  prCompanyCode: string
+): Promise<{ token: string } | undefined> {
   try {
-    const response = await api.post("/auth/user", data);
+    const response = await api.post("/auth/user", {
+      ...data,
+      companyCode: prCompanyCode,
+    });
+
     const responseAuth = response.data as {
       sessionKey: string;
     };
@@ -45,13 +40,12 @@ export async function Authenticate(
       })
       .then((prResponseSession) => {
         const responseSession = prResponseSession.data as { token: string };
-        const payload = jwtDecode(responseSession.token) as PayloadJWT;
 
         api.defaults.headers[
           "Authorization"
         ] = `Bearer ${responseSession.token}`;
 
-        return payload;
+        return responseSession;
       });
   } catch (error: unknown) {
     if (error instanceof AxiosError) {

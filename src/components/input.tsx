@@ -23,8 +23,11 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(function (
           ref={ref}
           className={clsx(
             "rounded-md px-4 h-9 outline-none border border-solid border-gray-300 bg-white",
+            //disable
+            props.disabled &&
+              "text-gray-600 bg-gray-200 dark:bg-gray-600 dark:text-gray-400",
             //event
-            "focus:border-slate-800 dark:focus:border-gray-500",
+            "focus:border-slate-400 dark:focus:border-gray-500",
             //dark
             "dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700"
           )}
