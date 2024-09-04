@@ -1,10 +1,4 @@
-import {
-  createBrowserRouter,
-  useParams,
-  Navigate,
-  Outlet,
-  useLocation,
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import { LayoutApp } from "@/pages/app/_layouts/app";
 import { PageNotFound } from "@/pages/error/404";
@@ -17,18 +11,18 @@ import { User } from "@/pages/app/user";
 import { UserView } from "./pages/app/user/view";
 import { Company } from "./pages/app/company";
 import { CompanyView } from "./pages/app/company/view";
-import { useContext } from "react";
-import { AppContext } from "./contexts/app-context";
+import MiddlewareAuth from "./pages/auth/middleware-auth";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <IsAuthenticated />,
+    path: "/auth/:companyCode",
+    element: <SignIn />,
+  },
+  {
+    path: "/app",
+    element: <MiddlewareAuth />,
+    errorElement: <PageNotFound />,
     children: [
-      {
-        path: "/auth/:companyCode",
-        element: <SignIn />,
-      },
       {
         path: "/app",
         element: <LayoutApp />,
@@ -63,25 +57,3 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
-
-function IsAuthenticated() {
-  const location = useLocation();
-  const { companyCode } = useParams();
-  const { isAuthenticated } = useContext(AppContext);
-  const companyCodeStorage = sessionStorage.getItem("companyCode");
-  const companyCodeValue = companyCode || companyCodeStorage;
-
-  if (!isAuthenticated && !location.pathname.startsWith("/auth")) {
-    return <Navigate to={`/auth/${companyCodeValue}`} replace />;
-  }
-
-  if (
-    isAuthenticated &&
-    (location.pathname == "/" ||
-      location.pathname == "/app" ||
-      location.pathname.startsWith("/auth"))
-  )
-    return <Navigate to="/app/dashboard" replace />;
-
-  return <Outlet />;
-}

@@ -5,7 +5,7 @@ import { CompanyAPI } from "@/api/company";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
 import { PageLayout } from "@/components/layout/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
-import { IResponseErrorData, ICompany } from "@/lib/definitions";
+import { IResponseArrayErrorData, ICompany } from "@/lib/definitions";
 
 export function Company() {
   const [data, setData] = useState<ICompany[]>();
@@ -24,7 +24,7 @@ export function Company() {
         let errorMessage = err.code + " - " + err.message;
 
         if (err.response?.data) {
-          const errData = err.response.data as IResponseErrorData;
+          const errData = err.response.data as IResponseArrayErrorData;
 
           errorMessage += " - Error: " + errData.message[0].message;
         }

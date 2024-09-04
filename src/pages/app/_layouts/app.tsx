@@ -13,7 +13,7 @@ type SidebarContextType = {
 export const SidebarContext = createContext({} as SidebarContextType);
 
 export function LayoutApp() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div id="layout-app">

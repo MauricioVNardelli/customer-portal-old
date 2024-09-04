@@ -2,13 +2,13 @@ import logo from "@/assets/coopermapp.png";
 import * as z from "zod";
 
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { redirect, useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Authenticate } from "@/api/auth";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 import { toast } from "sonner";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "@/contexts/app-context";
 
 const schema = z
@@ -25,7 +25,7 @@ type Schema = z.infer<typeof schema>;
 export function SignIn() {
   const navigate = useNavigate();
   const { companyCode } = useParams();
-  const { SignIn: SignInCtx } = useContext(AppContext);
+  const { SignIn: SignInCtx, isAuthenticated } = useContext(AppContext);
 
   const {
     register,
@@ -34,6 +34,12 @@ export function SignIn() {
   } = useForm<Schema>({
     resolver: zodResolver(schema),
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/app/dashboard");
+    }
+  }, [isAuthenticated]);
 
   async function onSubmit(data: Schema) {
     try {

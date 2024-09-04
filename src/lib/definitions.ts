@@ -30,8 +30,12 @@ export interface ICompany {
   update_at?: string;
 }
 
+export interface IResponseArrayErrorData {
+  message: [IResponseErrorData];
+}
+
 export interface IResponseErrorData {
-  message: [{ message: string }];
+  message: string;
 }
 
 export interface IPayloadJWT {
@@ -45,7 +49,10 @@ export interface IPayloadJWTUser {
   companyId: string;
   email: string;
   name: string;
+  role: type_role;
 }
+
+export type type_role = "ADMIN" | "USER";
 
 export type typeMask =
   | "cep"

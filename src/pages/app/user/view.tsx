@@ -12,24 +12,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import { IResponseErrorData, IUser } from "@/lib/definitions";
 import { UserAPI } from "@/api/users";
-import { constStatus } from "@/lib/constants";
-import { PasswordInput } from "@mantine/core";
+import { const_role, const_status } from "@/lib/constants";
 import { useState } from "react";
 import { AxiosError } from "axios";
 
-const schemaUpdate = z
-  .object({
-    role: z.string(),
-    name: z.string(),
-    email: z.string().email({ message: "E-mail inválido" }),
-    cpf: z.string(),
-    status: z.string(),
-    companyId: z.string(),
-    companyCode: z.string(),
-  })
-  .required();
-
-const schemaCreate = z
+const schema = z
   .object({
     role: z.string(),
     name: z.string(),
@@ -49,13 +36,12 @@ export function UserView() {
   const [error, setError] = useState("");
 
   const form = useForm<IUser>({
-    resolver: zodResolver(paramId ? schemaUpdate : schemaCreate),
+    resolver: zodResolver(schema),
     defaultValues: async () => {
       let user = {} as IUser;
 
       if (paramId) {
         user = await userAPI.Get(paramId);
-        return user;
       }
 
       return user;
@@ -71,6 +57,7 @@ export function UserView() {
       role: data.role,
       status: data.status,
       companyId: data.companyId,
+      password: data.password,
     };
 
     try {
@@ -79,7 +66,7 @@ export function UserView() {
     } catch (err) {
       if (err instanceof AxiosError) {
         const data = err.response?.data as IResponseErrorData;
-        descriptionError = data.message[0].message;
+        descriptionError = data.message;
       }
     }
 
@@ -111,7 +98,7 @@ export function UserView() {
 
             <Select
               label="Perfil"
-              data={["ADMIN", "USER"]}
+              data={const_role}
               {...form.register("role")}
             />
 
@@ -125,21 +112,18 @@ export function UserView() {
 
             <Select
               label="Situação"
-              data={constStatus}
+              data={const_status}
               disabled={!paramId}
               className="col-span-2"
               {...form.register("status")}
             />
 
-            {!paramId ? (
-              <PasswordInput
-                label="Senha"
-                className="col-span-4"
-                {...form.register("password")}
-              />
-            ) : (
-              <></>
-            )}
+            <Input
+              label="Senha"
+              className="col-span-4"
+              type="password"
+              {...form.register("password")}
+            />
 
             <FormButtonPalette
               isSubmitting={form.formState.isSubmitting}

@@ -11,6 +11,7 @@ import clsx from "clsx";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { SidebarUser } from "./sidebar-user";
+import { AppContext } from "@/contexts/app-context";
 
 type menu = {
   name: string;
@@ -26,6 +27,9 @@ const listMenuCustomer: menu[] = [
     src: "/app/contract",
     icon: <IconContract stroke={1.5} />,
   },
+];
+
+const listMenuAdmin: menu[] = [
   {
     name: "Usuário",
     src: "/app/user",
@@ -40,10 +44,9 @@ const listMenuCustomer: menu[] = [
   },
 ];
 
-const listMenuAdmin: menu[] = [];
-
 export function Sidebar() {
   const { isOpenSidebar, setSidebarOpen } = useContext(SidebarContext);
+  const { user } = useContext(AppContext);
 
   function getListMenu(prListMenu: menu[]): React.ReactNode {
     return prListMenu.map((value) => (
@@ -86,7 +89,7 @@ export function Sidebar() {
           <li id="list-menu">
             <ul className="">{getListMenu(listMenuCustomer)}</ul>
           </li>
-          {listMenuAdmin.length > 0 && (
+          {listMenuAdmin.length > 0 && user?.role == "ADMIN" && (
             <li id="list-menu-private">
               <p
                 className={clsx(

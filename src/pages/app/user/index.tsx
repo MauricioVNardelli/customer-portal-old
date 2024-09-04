@@ -2,7 +2,7 @@ import { UserAPI } from "@/api/users";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
 import { PageLayout } from "@/components/layout/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
-import { IResponseErrorData, IUser } from "@/lib/definitions";
+import { IResponseArrayErrorData, IUser } from "@/lib/definitions";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
@@ -23,7 +23,7 @@ export function User() {
         let errorMessage: string = err.code + " - " + err.message;
 
         if (err.response?.data) {
-          const errData = err.response.data as IResponseErrorData;
+          const errData = err.response.data as IResponseArrayErrorData;
 
           errorMessage += " - Error: " + errData.message[0].message;
         }
