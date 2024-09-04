@@ -53,7 +53,7 @@ export function Table(props: ITableProps) {
   const rows = props.dataValues.map((elValue) => (
     <TableMantine.Tr
       key={elValue["id"]}
-      className="hover:bg-sky-100 dark:hover:bg-gray-800 dark:bg-slate-900 dark:text-gray-200"
+      className="dark:border-b-gray-600 hover:bg-sky-100 dark:hover:bg-gray-800 dark:bg-slate-900 dark:text-gray-300"
       onDoubleClick={() => onDoubleClick(elValue["id"])}
     >
       {props.dataHeader.map((elHeader, index) => (

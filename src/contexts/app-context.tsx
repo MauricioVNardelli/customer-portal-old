@@ -34,6 +34,8 @@ export function AppProvider({ children }: AppProviderProps) {
 
       setUser(payload.user);
       getCompany(payload.user.companyId);
+
+      //console.log("useEffect 2 - appContext");
     }
   }, []);
 

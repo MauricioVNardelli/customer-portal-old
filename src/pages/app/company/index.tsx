@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 
 import { CompanyAPI } from "@/api/company";
-import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
 import { PageLayout } from "@/components/layout/page-layout";
 import { Table, dataHeaderTable } from "@/components/table";
 import { IResponseArrayErrorData, ICompany } from "@/lib/definitions";
@@ -35,11 +34,6 @@ export function Company() {
 
   return (
     <PageLayout title="EMPRESA">
-      <PageButtonPalette
-        buttons={[
-          { name: "Incluir", color: "gray", src: "/app/company/view/" },
-        ]}
-      />
       {data ? (
         <Table dataHeader={headerFields} dataValues={data} />
       ) : (
@@ -50,7 +44,7 @@ export function Company() {
 }
 
 const headerFields: dataHeaderTable[] = [
-  { field: "code", headerName: "Código" },
   { field: "name", headerName: "Nome" },
   { field: "cnpj", headerName: "CNPJ" },
+  { field: "code", headerName: "Código" },
 ];
