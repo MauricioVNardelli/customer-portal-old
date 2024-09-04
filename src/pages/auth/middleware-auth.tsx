@@ -9,9 +9,9 @@ export default function MiddlewareAuth() {
   const companyCodeStorage = sessionStorage.getItem("companyCode");
   const companyCodeValue = companyCode || companyCodeStorage;
 
-  console.log("companyParam", companyCode);
-  console.log("companyStorage", companyCodeStorage);
-  console.log("location", location.pathname);
+  //console.log("companyParam", companyCode);
+  //console.log("companyStorage", companyCodeStorage);
+  //console.log("location", location.pathname);
 
   if (!isAuthenticated && companyCodeValue) {
     return <Navigate to={`/auth/${companyCodeValue}`} replace />;
