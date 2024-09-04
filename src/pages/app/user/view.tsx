@@ -105,7 +105,7 @@ export function UserView() {
             <Input
               label="E-mail"
               className="col-span-2"
-              disabled
+              disabled={paramId != undefined}
               errorMessage={form.formState.errors.email?.message}
               {...form.register("email")}
             />

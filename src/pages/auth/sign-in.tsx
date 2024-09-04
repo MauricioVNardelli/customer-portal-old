@@ -2,7 +2,7 @@ import logo from "@/assets/coopermapp.png";
 import * as z from "zod";
 
 import { useForm } from "react-hook-form";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Authenticate } from "@/api/auth";
 import { Input } from "@/components/input";
