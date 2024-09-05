@@ -15,7 +15,6 @@ export function SidebarUser() {
 
   function ExitHandle() {
     const companyCode = localStorage.getItem("companyCode");
-    localStorage.clear();
 
     SignOut();
 

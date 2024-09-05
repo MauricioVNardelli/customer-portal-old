@@ -23,7 +23,7 @@ export function AppProvider({ children }: AppProviderProps) {
   const [companyName, setCompanyName] = useState<string>("");
   const isAuthenticated = user !== undefined;
 
-  //console.log("contexto - JS", isAuthenticated);
+  console.log("contexto - JS", isAuthenticated);
 
   useEffect(() => {
     const { authorization: token } = parseCookies(null);
@@ -43,6 +43,7 @@ export function AppProvider({ children }: AppProviderProps) {
     destroyCookie(null, "authorization");
     setUser(undefined);
     setCompanyName("");
+    localStorage.clear();
   }
 
   async function SignIn(prToken: string) {

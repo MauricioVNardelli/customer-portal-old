@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(function (
           {...otherProps}
         />
         {errorMessage && (
-          <p className="pt-2 pb-4 text-gray-300">{props.errorMessage}</p>
+          <p className="pt-2 pb-2 text-gray-300">{props.errorMessage}</p>
         )}
       </div>
     );

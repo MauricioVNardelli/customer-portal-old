@@ -1,4 +1,5 @@
-import logo from "@/assets/coopermapp.png";
+import logo from "@/assets/AR/logo.png";
+import login from "@/assets/AR/login.jpg";
 import * as z from "zod";
 
 import { useForm } from "react-hook-form";
@@ -63,32 +64,35 @@ export function SignIn() {
             id="content-logo"
             className="flex items-center justify-center w-full h-full bg-white dark:bg-slate-800"
           >
-            <img
-              src={logo}
-              className="w-24 h-24 rounded-xl shadow-lg shadow-slate-800"
-            />
+            <img src={login} className="h-full w-full" />
           </div>
         </div>
 
-        <div className="w-full min-[1101px]:max-w-[560px] shadow-lg shadow-slate-600">
-          <div className="flex flex-col justify-center pt-20 px-10 md:pt-48 md:px-20 w-full">
+        <div className="w-full min-[1101px]:max-w-[560px] shadow-lg shadow-slate-800">
+          <div className="flex flex-col justify-center pt-20 px-10 md:pt-12 md:px-20 w-full">
+            <div id="logo" className="flex justify-center w-full pt-10 pb-28">
+              <img src={logo} className="w-2/4" />
+            </div>
+
             <h1 className="text-slate-400 text-xl font-bold pb-8">
               Acesse sua conta
             </h1>
+
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col w-full"
             >
               <Input
-                placeholder="Usuário"
-                className="h-14 mb-4"
+                placeholder="E-mail"
+                className="h-14"
+                errorMessage={errors.email?.message}
                 {...register("email")}
               />
 
               <Input
                 placeholder="Senha"
                 type="password"
-                className="h-14"
+                className="h-14 mt-4"
                 errorMessage={errors.password?.message}
                 {...register("password")}
               />

@@ -12,8 +12,13 @@ import { UserView } from "./pages/app/user/view";
 import { Company } from "./pages/app/company";
 import { CompanyView } from "./pages/app/company/view";
 import MiddlewareAuth from "./pages/auth/middleware-auth";
+import { Home } from "./pages/site";
 
 export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
   {
     path: "/auth/:companyCode",
     element: <SignIn />,
