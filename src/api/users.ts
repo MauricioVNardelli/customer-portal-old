@@ -22,13 +22,30 @@ export class UserAPI {
   }
 
   async Update(prId: string | undefined, prUser: IUser): Promise<IUser> {
-    const response = await api.patch(`${path}/${prId}`, prUser);
+    const data = {
+      name: prUser.name,
+      cpf: prUser.cpf,
+      role: prUser.role,
+      status: prUser.status,
+      companyId: prUser.companyId,
+    };
+
+    const response = await api.patch(`${path}/${prId}`, data);
 
     return response.data;
   }
 
   async Create(prUser: IUser): Promise<IUser> {
-    const response = await api.post(path, prUser);
+    const data = {
+      name: prUser.name,
+      email: prUser.email,
+      password: prUser.password,
+      cpf: prUser.cpf,
+      role: prUser.role,
+      companyId: prUser.companyId,
+    };
+
+    const response = await api.post(path, data);
 
     return response.data;
   }

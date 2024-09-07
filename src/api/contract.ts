@@ -1,4 +1,5 @@
 import { IContract } from "@/lib/definitions";
+import { FormatDate } from "@/lib/utils";
 
 //const path = "/contract";
 
@@ -15,7 +16,7 @@ export class ContractAPI {
     for (let i = 0; i < 5; i++) {
       data.push({
         id: i.toString(),
-        dateIssue: new Date().toString(),
+        dateIssue: FormatDate(new Date()),
         documentNumber: "2758" + i,
         documentSeries: i.toString(),
         motoristName: "MOTORISTA DA SILA " + i,

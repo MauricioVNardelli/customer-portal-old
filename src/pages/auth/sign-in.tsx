@@ -11,6 +11,7 @@ import { Button } from "@/components/button";
 import { toast } from "sonner";
 import { useContext, useEffect } from "react";
 import { AppContext } from "@/contexts/app-context";
+import clsx from "clsx";
 
 const schema = z
   .object({
@@ -69,9 +70,20 @@ export function SignIn() {
         </div>
 
         <div className="w-full min-[1101px]:max-w-[560px] shadow-lg shadow-slate-800">
-          <div className="flex flex-col justify-center pt-20 px-10 md:pt-12 md:px-20 w-full">
-            <div id="logo" className="flex justify-center w-full pt-10 pb-28">
-              <img src={logo} className="w-2/4" />
+          <div
+            className={clsx(
+              "flex flex-col justify-center pt-12 px-10 w-full",
+              "transition-all duration-700 md:px-20"
+            )}
+          >
+            <div
+              id="logo"
+              className={clsx(
+                "flex justify-center w-full ",
+                "min-[1101px]:pt-10 min-[1101px]:pb-28 pb-16"
+              )}
+            >
+              <img src={logo} className="w-[200px] h-[100px]" />
             </div>
 
             <h1 className="text-slate-400 text-xl font-bold pb-8">

@@ -1,5 +1,5 @@
 import { typeMask } from "@/lib/definitions";
-import { getMask } from "@/lib/utils";
+import { GetMask } from "@/lib/utils";
 import { TextInput, TextInputProps } from "@mantine/core";
 import { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
@@ -16,7 +16,7 @@ export function InputForm({ fieldName, mask, ...otherProps }: IInputForm) {
   const { ref: refRegister, ...otherRefRegister } = register(fieldName);
 
   const digitsOnlyMask: MaskitoOptions = {
-    mask: getMask(mask),
+    mask: GetMask(mask),
   };
 
   const inputRef = useMaskito({ options: digitsOnlyMask });

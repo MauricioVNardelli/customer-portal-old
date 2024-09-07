@@ -13,8 +13,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IResponseErrorData, IUser } from "@/lib/definitions";
 import { UserAPI } from "@/api/users";
 import { const_role, const_status } from "@/lib/constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AxiosError } from "axios";
+import { AppContext } from "@/contexts/app-context";
+import clsx from "clsx";
 
 const schema = z
   .object({
@@ -34,38 +36,36 @@ export function UserView() {
   const { paramId } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const { user } = useContext(AppContext);
 
   const form = useForm<IUser>({
     resolver: zodResolver(schema),
     defaultValues: async () => {
-      let user = {} as IUser;
-
       if (paramId) {
-        user = await userAPI.Get(paramId);
+        return await userAPI.Get(paramId);
       }
 
-      return user;
+      const responseUser = {} as IUser;
+
+      if (user) {
+        responseUser.companyCode = user.companyCode;
+        responseUser.companyId = user.companyId;
+      }
+
+      return responseUser;
     },
   });
 
   async function onSubmit(data: IUser) {
     let descriptionError = "";
 
-    const dataUpdate = {
-      name: data.name,
-      cpf: data.cpf,
-      role: data.role,
-      status: data.status,
-      companyId: data.companyId,
-      password: data.password,
-    };
-
     try {
-      if (paramId) await userAPI.Update(paramId, dataUpdate);
+      if (paramId) await userAPI.Update(paramId, data);
       else await userAPI.Create(data);
     } catch (err) {
       if (err instanceof AxiosError) {
         const data = err.response?.data as IResponseErrorData;
+
         descriptionError = data.message;
       }
     }
@@ -84,12 +84,12 @@ export function UserView() {
         <FormProvider {...form}>
           <form
             id="form-viewuser"
-            className="grid grid-cols-4 gap-2"
+            className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <Input
               label="Nome"
-              className="col-span-2"
+              className="md:col-span-2"
               //error={form.formState.errors.name?.message}
               {...form.register("name")}
             />
@@ -104,7 +104,7 @@ export function UserView() {
 
             <Input
               label="E-mail"
-              className="col-span-2"
+              className="md:col-span-2"
               disabled={paramId != undefined}
               errorMessage={form.formState.errors.email?.message}
               {...form.register("email")}
@@ -113,21 +113,23 @@ export function UserView() {
             <Select
               label="Situação"
               data={const_status}
-              disabled={!paramId}
-              className="col-span-2"
+              className="md:col-span-2"
               {...form.register("status")}
             />
 
             <Input
               label="Senha"
-              className="col-span-4"
+              className={clsx(
+                "md:col-span-4",
+                paramId != undefined && "hidden"
+              )}
               type="password"
               {...form.register("password")}
             />
 
             <FormButtonPalette
               isSubmitting={form.formState.isSubmitting}
-              className="col-span-4"
+              className="sm:col-span-2 md:col-span-4"
             />
           </form>
         </FormProvider>

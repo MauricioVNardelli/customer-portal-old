@@ -1,5 +1,8 @@
-export interface IUser {
+export interface ITableBase {
   id?: string;
+}
+
+export interface IUser extends ITableBase {
   name: string;
   email?: string;
   password?: string;
@@ -11,8 +14,7 @@ export interface IUser {
   companyCode?: string;
 }
 
-export interface IContract {
-  id: string;
+export interface IContract extends ITableBase {
   dateIssue: string;
   motoristName: string;
   documentNumber: string;
@@ -20,8 +22,7 @@ export interface IContract {
   documentPdfBase64: string;
 }
 
-export interface ICompany {
-  id?: string;
+export interface ICompany extends ITableBase {
   code: string;
   name: string;
   image?: string;

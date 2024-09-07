@@ -14,6 +14,7 @@ export type dataHeaderTable = {
 interface ITableProps {
   dataHeader: dataHeaderTable[];
   dataValues: any[];
+  notHasView?: boolean;
 }
 
 interface IResPrintClick {
@@ -54,7 +55,9 @@ export function Table(props: ITableProps) {
     <TableMantine.Tr
       key={elValue["id"]}
       className="dark:border-b-gray-600 hover:bg-sky-100 dark:hover:bg-gray-800 dark:bg-slate-900 dark:text-gray-300"
-      onDoubleClick={() => onDoubleClick(elValue["id"])}
+      onDoubleClick={
+        props.notHasView ? undefined : () => onDoubleClick(elValue["id"])
+      }
     >
       {props.dataHeader.map((elHeader, index) => (
         <TableMantine.Td

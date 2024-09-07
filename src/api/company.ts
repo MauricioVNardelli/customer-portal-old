@@ -21,7 +21,12 @@ export class CompanyAPI {
   }
 
   async Update(prId: string | undefined, prData: ICompany): Promise<ICompany> {
-    const response = await api.patch(`${path}/${prId}`, prData);
+    const data = {
+      name: prData.name,
+      code: prData.code,
+    };
+
+    const response = await api.patch(`${path}/${prId}`, data);
 
     return response.data;
   }

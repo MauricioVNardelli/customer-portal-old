@@ -36,13 +36,8 @@ export function CompanyView() {
   });
 
   async function onSubmit(data: ICompany) {
-    const dataUpdate = {
-      name: data.name,
-      code: data.code,
-    };
-
     try {
-      if (paramId) await companyAPI.Update(paramId, dataUpdate);
+      if (paramId) await companyAPI.Update(paramId, data);
       else await companyAPI.Create(data);
 
       navigate("/app/company");
@@ -65,7 +60,7 @@ export function CompanyView() {
             className="flex flex-col items-center"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <div className="grid grid-cols-2 gap-2 w-full mt-4">
+            <div className="grid gap-2 sm:grid-cols-2 w-full mt-4">
               <Input label="Nome" {...form.register("name")} />
               <Input
                 disabled

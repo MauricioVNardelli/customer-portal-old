@@ -28,7 +28,7 @@ export function Contract() {
   return (
     <PageLayout title="RECIBO DE REPASSE">
       {data ? (
-        <Table dataHeader={headerFields} dataValues={data} />
+        <Table dataHeader={headerFields} dataValues={data} notHasView />
       ) : (
         <p className="dark:text-gray-200">{error ? error : "Carregando..."}</p>
       )}
