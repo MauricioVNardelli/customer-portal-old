@@ -23,24 +23,20 @@ export function AppProvider({ children }: AppProviderProps) {
   const [companyName, setCompanyName] = useState<string>("");
   const isAuthenticated = user !== undefined;
 
-  //console.log("contexto - JS", isAuthenticated);
-
   useEffect(() => {
     const { authorization: token } = parseCookies(null);
 
-    //console.log("useEffect - appContext");
     if (token) {
       const payload = jwtDecode(token) as IPayloadJWT;
 
       setUser(payload.user);
       getCompany(payload.user.companyId);
-
-      //console.log("useEffect 2 - appContext");
     }
   }, []);
 
   async function SignOut() {
     destroyCookie(null, "authorization");
+
     setUser(undefined);
     setCompanyName("");
     localStorage.clear();
@@ -51,6 +47,7 @@ export function AppProvider({ children }: AppProviderProps) {
 
     setCookie(null, "authorization", prToken, {
       expires: new Date(payload.exp * 1000),
+      path: "/app",
     });
 
     localStorage.setItem("companyCode", payload.user.companyCode);

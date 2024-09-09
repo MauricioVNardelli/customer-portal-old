@@ -10,9 +10,6 @@ export default function MiddlewareAuth() {
   const companyCodeStorage = localStorage.getItem("companyCode");
   const companyCodeValue = companyCode || companyCodeStorage;
 
-  //console.log("middleware - auth", isAuthenticated);
-  //console.log("middleware - comp", companyCode);
-
   if (!isAuthenticated) {
     return <Navigate to={`/auth/${companyCodeValue}`} replace />;
   }

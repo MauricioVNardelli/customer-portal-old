@@ -41,7 +41,7 @@ export function SignIn() {
     if (isAuthenticated) {
       navigate("/app/dashboard");
     }
-  }, [isAuthenticated]);
+  }, []);
 
   async function onSubmit(data: Schema) {
     try {
