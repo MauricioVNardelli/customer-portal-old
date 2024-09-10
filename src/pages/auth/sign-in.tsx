@@ -1,4 +1,4 @@
-import login from "@/assets/AR/login.jpg";
+import login from "@/assets/login.jpg";
 import * as z from "zod";
 
 import { useForm } from "react-hook-form";
