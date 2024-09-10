@@ -89,7 +89,7 @@ export function Sidebar() {
           <li id="list-menu">
             <ul className="">{getListMenu(listMenuCustomer)}</ul>
           </li>
-          {listMenuAdmin.length > 0 && user?.role == "ADMIN" && (
+          {listMenuAdmin.length > 0 && user?.role != "USUARIO" && (
             <li id="list-menu-private">
               <p
                 className={clsx(

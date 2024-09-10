@@ -10,20 +10,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ICompany } from "@/lib/definitions";
 import { CompanyAPI } from "@/api/company";
 import { Input } from "@/components/input";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AxiosError } from "axios";
+import { AppContext } from "@/contexts/app-context";
 
 const schema = z
   .object({
     name: z.string(),
     cnpj: z.string(),
     code: z.string(),
+    image: z.string(),
   })
   .required();
 
 export function CompanyView() {
   const companyAPI = new CompanyAPI();
-
+  const { user } = useContext(AppContext);
   const { paramId } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState<string>();
@@ -49,12 +51,14 @@ export function CompanyView() {
 
   return (
     <PageLayout>
-      <PageButtonPalette
-        buttons={[{ name: "Voltar", color: "gray", src: "/app/company" }]}
-      />
+      {user?.role == "ADMIN" && (
+        <PageButtonPalette
+          buttons={[{ name: "Voltar", color: "gray", src: "/app/company" }]}
+        />
+      )}
 
-      <FormLayout messageError={error} funcClearError={setError}>
-        <FormProvider {...form}>
+      <FormProvider {...form}>
+        <FormLayout messageError={error} funcClearError={setError}>
           <form
             id="form-viewuser"
             className="flex flex-col items-center"
@@ -68,6 +72,17 @@ export function CompanyView() {
                 mask="cnpj"
                 {...form.register("cnpj")}
               />
+              <Input
+                label="URL Logo (max 200 x 200)"
+                className="sm:col-span-2"
+                {...form.register("image")}
+              />
+              <Input
+                label="Código"
+                disabled
+                className="sm:col-span-2"
+                {...form.register("code")}
+              />
             </div>
 
             <FormButtonPalette
@@ -75,8 +90,8 @@ export function CompanyView() {
               className="w-full"
             />
           </form>
-        </FormProvider>
-      </FormLayout>
+        </FormLayout>
+      </FormProvider>
     </PageLayout>
   );
 }

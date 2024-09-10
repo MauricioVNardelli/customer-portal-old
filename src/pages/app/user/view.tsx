@@ -80,8 +80,8 @@ export function UserView() {
         buttons={[{ name: "Voltar", color: "gray", src: "/app/user" }]}
       />
 
-      <FormLayout messageError={error} funcClearError={setError}>
-        <FormProvider {...form}>
+      <FormProvider {...form}>
+        <FormLayout messageError={error} funcClearError={setError}>
           <form
             id="form-viewuser"
             className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4"
@@ -132,8 +132,8 @@ export function UserView() {
               className="sm:col-span-2 md:col-span-4"
             />
           </form>
-        </FormProvider>
-      </FormLayout>
+        </FormLayout>
+      </FormProvider>
     </PageLayout>
   );
 }

@@ -24,6 +24,7 @@ export class CompanyAPI {
     const data = {
       name: prData.name,
       code: prData.code,
+      image: prData.image == "" ? null : prData.image,
     };
 
     const response = await api.patch(`${path}/${prId}`, data);
@@ -35,5 +36,12 @@ export class CompanyAPI {
     const response = await api.post(path, prCompany);
 
     return response.data;
+  }
+
+  async GetImage(prCompanyCode: string | undefined): Promise<string> {
+    const response = await api.get(`${path}/${prCompanyCode}/image`);
+    const data = response.data as { imageUrl: string };
+
+    return data.imageUrl;
   }
 }

@@ -1,4 +1,3 @@
-import logo from "@/assets/AR/logo.png";
 import login from "@/assets/AR/login.jpg";
 import * as z from "zod";
 
@@ -12,6 +11,7 @@ import { toast } from "sonner";
 import { useContext, useEffect } from "react";
 import { AppContext } from "@/contexts/app-context";
 import clsx from "clsx";
+import { Logo } from "./logo";
 
 const schema = z
   .object({
@@ -38,9 +38,7 @@ export function SignIn() {
   });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/app/dashboard");
-    }
+    if (isAuthenticated) navigate("/app/dashboard");
   }, []);
 
   async function onSubmit(data: Schema) {
@@ -60,7 +58,7 @@ export function SignIn() {
   if (companyCode?.length == 36)
     return (
       <div className="flex h-screen bg-gradient-to-t from-slate-900 to-slate-950">
-        <div className="w-full hidden min-[1101px]:block ">
+        <div className="w-full hidden lg:block ">
           <div
             id="content-logo"
             className="flex items-center justify-center w-full h-full bg-white dark:bg-slate-800"
@@ -69,21 +67,23 @@ export function SignIn() {
           </div>
         </div>
 
-        <div className="w-full min-[1101px]:max-w-[560px] shadow-lg shadow-slate-800">
+        <div className="w-full shadow-lg shadow-slate-800 lg:max-w-[560px]">
           <div
             className={clsx(
-              "flex flex-col justify-center pt-12 px-10 w-full",
+              "flex flex-col justify-center pt-2 px-10 w-full",
               "transition-all duration-700 md:px-20"
             )}
           >
             <div
               id="logo"
               className={clsx(
-                "flex justify-center w-full ",
-                "min-[1101px]:pt-10 min-[1101px]:pb-28 pb-16"
+                "flex justify-center items-center w-full mt-10 mb-20"
               )}
             >
-              <img src={logo} className="w-[200px] h-[100px]" />
+              <Logo
+                companyCode={companyCode}
+                className="max-h-[200px] max-w-[200px] "
+              />
             </div>
 
             <h1 className="text-slate-400 text-xl font-bold pb-8">

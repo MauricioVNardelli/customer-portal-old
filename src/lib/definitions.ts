@@ -53,7 +53,7 @@ export interface IPayloadJWTUser {
   role: type_role;
 }
 
-export type type_role = "ADMIN" | "USER";
+export type type_role = "ADMIN" | "CLIENTE" | "USUARIO";
 
 export type typeMask =
   | "cep"

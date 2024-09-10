@@ -1,4 +1,5 @@
 import { Modal } from "@mantine/core";
+import { useFormContext } from "react-hook-form";
 
 type FormLayoutProps = {
   children: React.ReactNode;
@@ -7,6 +8,15 @@ type FormLayoutProps = {
 };
 
 export function FormLayout(props: FormLayoutProps) {
+  const { formState } = useFormContext();
+
+  if (formState.isLoading)
+    return (
+      <div>
+        <p className="dark:text-white">Carregando...</p>
+      </div>
+    );
+
   return (
     <div id="form-layout" className="w-full h-full flex justify-center">
       <div
