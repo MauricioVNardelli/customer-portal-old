@@ -39,7 +39,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(function (
     );
 
   return (
-    <div className={clsx("flex flex-col")}>
+    <div className="flex flex-col">
       <input
         //autoComplete="off"
         ref={ref}

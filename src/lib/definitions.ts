@@ -14,12 +14,20 @@ export interface IUser extends ITableBase {
   companyCode?: string;
 }
 
-export interface IContract extends ITableBase {
-  dateIssue: string;
-  motoristName: string;
-  documentNumber: string;
-  documentSeries: string;
-  documentPdfBase64: string;
+export interface IScheduling extends ITableBase {
+  type: "ENTRADA" | "SAIDA";
+  date: string;
+  control_number: string;
+  cnpj: string;
+  carrier_cnpj: string;
+  carrier_name: string;
+  carrier_motorist: string;
+  carriger_plate: string;
+  container_type: string;
+  container_code: string;
+  type_load: "CHEIO" | "VAZIO";
+  demurrage: string;
+  temperature: number;
 }
 
 export interface ICompany extends ITableBase {

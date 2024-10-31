@@ -1,10 +1,18 @@
 import { UserAPI } from "@/api/users";
 import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
 import { PageLayout } from "@/components/layout/page-layout";
-import { Table, dataHeaderTable } from "@/components/table";
+import { Table } from "@/components/table/index";
+import { THeaderColumn } from "@/components/table/table-head";
 import { IResponseArrayErrorData, IUser } from "@/lib/definitions";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+
+const headerFields: THeaderColumn[] = [
+  { fieldName: "role", title: "Perfil" },
+  { fieldName: "name", title: "Nome" },
+  { fieldName: "status", title: "Situação" },
+  { fieldName: "email", title: "E-mail" },
+];
 
 export function User() {
   const [data, setData] = useState<IUser[]>();
@@ -37,18 +45,7 @@ export function User() {
       <PageButtonPalette
         buttons={[{ name: "Incluir", color: "gray", src: "/app/user/view/" }]}
       />
-      {data ? (
-        <Table dataHeader={headerFields} dataValues={data} />
-      ) : (
-        <p className="dark:text-gray-200">{error ? error : "Carregando..."}</p>
-      )}
+      <Table columns={headerFields} data={data} />
     </PageLayout>
   );
 }
-
-const headerFields: dataHeaderTable[] = [
-  { field: "role", headerName: "Perfil" },
-  { field: "name", headerName: "Nome" },
-  { field: "status", headerName: "Situação" },
-  { field: "email", headerName: "E-mail" },
-];

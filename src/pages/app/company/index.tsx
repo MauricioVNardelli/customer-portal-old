@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react";
 
 import { CompanyAPI } from "@/api/company";
 import { PageLayout } from "@/components/layout/page-layout";
-import { Table, dataHeaderTable } from "@/components/table";
 import { IResponseArrayErrorData, ICompany } from "@/lib/definitions";
 import { AppContext } from "@/contexts/app-context";
 import { Navigate } from "react-router-dom";
+import { Table } from "@/components/table";
+import { THeaderColumn } from "@/components/table/table-head";
 
 export function Company() {
   const [data, setData] = useState<ICompany[]>();
@@ -40,21 +41,15 @@ export function Company() {
   if (user?.role == "ADMIN")
     return (
       <PageLayout title="EMPRESA">
-        {data ? (
-          <Table dataHeader={headerFields} dataValues={data} />
-        ) : (
-          <p className="dark:text-gray-200">
-            {error ? error : "Carregando..."}
-          </p>
-        )}
+        <Table columns={headerFields} data={data} />
       </PageLayout>
     );
 
   return <Navigate to={`/app/company/view/${user?.companyId}`} />;
 }
 
-const headerFields: dataHeaderTable[] = [
-  { field: "name", headerName: "Nome" },
-  { field: "cnpj", headerName: "CNPJ" },
-  { field: "code", headerName: "Código" },
+const headerFields: THeaderColumn[] = [
+  { fieldName: "name", title: "Nome" },
+  { fieldName: "cnpj", title: "CNPJ" },
+  { fieldName: "code", title: "Código" },
 ];

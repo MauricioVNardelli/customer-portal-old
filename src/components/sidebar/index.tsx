@@ -1,7 +1,7 @@
 import { SidebarContext } from "@/pages/app/_layouts/app";
 import {
   IconBuilding,
-  IconContract,
+  IconCalendarMonth,
   IconHome,
   IconMenu2,
   IconUser,
@@ -23,9 +23,9 @@ type menu = {
 const listMenuCustomer: menu[] = [
   { name: "Dashboard", src: "/app/dashboard", icon: <IconHome stroke={1.5} /> },
   {
-    name: "Contrato",
-    src: "/app/contract",
-    icon: <IconContract stroke={1.5} />,
+    name: "Agend. de pátio",
+    src: "/app/scheduling",
+    icon: <IconCalendarMonth stroke={1.5} />,
   },
 ];
 
@@ -72,7 +72,7 @@ export function Sidebar() {
   }
 
   return (
-    <div className="h-full dark:text-gray-300 dark:bg-gray-900">
+    <div className="bg-white h-full dark:text-gray-300 dark:bg-gray-900">
       <div className="flex w-full items-center justify-center h-12">
         <button
           onClick={() => setSidebarOpen(!isOpenSidebar)}

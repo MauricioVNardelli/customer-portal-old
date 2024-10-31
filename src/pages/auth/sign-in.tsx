@@ -1,4 +1,5 @@
 import login from "@/assets/login.jpg";
+import clsx from "clsx";
 import * as z from "zod";
 
 import { useForm } from "react-hook-form";
@@ -10,7 +11,6 @@ import { Button } from "@/components/button";
 import { toast } from "sonner";
 import { useContext, useEffect } from "react";
 import { AppContext } from "@/contexts/app-context";
-import clsx from "clsx";
 import { Logo } from "./logo";
 
 const schema = z
@@ -109,21 +109,23 @@ export function SignIn() {
                 {...register("password")}
               />
 
-              <a
-                href=""
-                className="mt-2 mb-4 transition-colors text-purple-800 hover:text-purple-900"
-              >
-                Esqueci minha senha
-              </a>
-
               <Button
                 type="submit"
                 isLoaling={isSubmitting}
-                className="rounded-lg h-14 shadow-md transition-colors font-bold text-slate-300 bg-purple-800 hover:bg-purple-900"
+                className="mt-4 rounded-lg h-14 shadow-md transition-colors font-bold text-slate-300 bg-purple-800 hover:bg-purple-900"
               >
                 Entrar
               </Button>
             </form>
+          </div>
+          <div className="flex flex-col w-full items-center mt-12">
+            <p className="text-gray-400">Esqueceu a senha?</p>
+            <button
+              type="button"
+              className="text-purple-700 hover:text-purple-600"
+            >
+              Clique aqui
+            </button>
           </div>
         </div>
       </div>
