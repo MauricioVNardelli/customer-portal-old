@@ -1,5 +1,7 @@
 import { MaskitoMask } from "@maskito/core";
-import { typeMask } from "./definitions";
+import { typeMask } from "./constants";
+import { AxiosError } from "axios";
+import { IAPIResponse, IResponseErrorData } from "./definitions";
 
 export function GetMask(prValueType: typeMask): MaskitoMask {
   let maskArr: MaskitoMask = [];
@@ -92,4 +94,21 @@ export function GetMask(prValueType: typeMask): MaskitoMask {
 
 export function FormatDate(prData: Date): string {
   return prData.toLocaleDateString("pt-BR");
+}
+
+export function TreatError(prError: unknown): IAPIResponse {
+  let errorMessage = "Erro não definido";
+
+  if (prError instanceof AxiosError)
+    errorMessage = prError.response?.data.message;
+  else if (prError instanceof Error) errorMessage = prError.message;
+  else {
+    const error = prError as IResponseErrorData;
+    errorMessage = error.message;
+  }
+
+  return {
+    sucess: false,
+    message: errorMessage,
+  };
 }

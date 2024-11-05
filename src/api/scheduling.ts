@@ -14,6 +14,33 @@ export class SchedulingAPI {
 
     return data;
   }
+
+  async Get(prId: string): Promise<IScheduling> {
+    const response = schedules.filter((value) => {
+      return value.id == prId;
+    })[0];
+
+    return response;
+  }
+
+  async Update(
+    prData: IScheduling,
+    prNewData: IScheduling
+  ): Promise<IScheduling> {
+    //const response = await api.get(path);
+
+    const data = prNewData;
+
+    return data;
+  }
+
+  async Create(prData: IScheduling): Promise<IScheduling> {
+    //const response = await api.get(path);
+
+    const data = prData;
+
+    return data;
+  }
 }
 
 const schedules: IScheduling[] = [

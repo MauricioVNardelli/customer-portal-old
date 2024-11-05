@@ -46,10 +46,10 @@ export function Body(props: ITableBodyProps) {
               className={clsx(
                 "h-8 border-b border-b-gray-200 hover:bg-gray-200",
                 index % 2 === 0
-                  ? "bg-gray-100 dark:bg-gray-700"
-                  : "dark:bg-gray-600",
+                  ? "bg-gray-100 dark:bg-slate-700"
+                  : "dark:bg-slate-800",
                 //dark
-                "dark:border-b-gray-600 dark:hover:bg-gray-800/60",
+                "dark:border-b-gray-600 dark:hover:bg-slate-500/60",
                 //
                 "transition-colors "
               )}

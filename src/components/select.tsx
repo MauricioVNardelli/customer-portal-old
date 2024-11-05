@@ -27,7 +27,7 @@ export const Select = forwardRef<HTMLSelectElement, ISelectProps>(function (
           //event
           "focus:border-slate-400 dark:focus:border-gray-500",
           //dark
-          "dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700"
+          "dark:text-gray-300 dark:bg-gray-800 dark:border-gray-700"
         )}
         {...otherProps}
       >

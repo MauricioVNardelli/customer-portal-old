@@ -1,3 +1,24 @@
+import {
+  type_load,
+  type_method,
+  type_origin,
+  type_role,
+  type_scheduling,
+} from "./constants";
+
+export interface IAPIResponse {
+  sucess: boolean;
+  message: string;
+}
+
+export interface IResponseArrayErrorData {
+  message: [IResponseErrorData];
+}
+
+export interface IResponseErrorData {
+  message: string;
+}
+
 export interface ITableBase {
   id?: string;
 }
@@ -15,7 +36,7 @@ export interface IUser extends ITableBase {
 }
 
 export interface IScheduling extends ITableBase {
-  type: "ENTRADA" | "SAIDA";
+  type: type_scheduling;
   date: string;
   control_number: string;
   cnpj: string;
@@ -25,11 +46,12 @@ export interface IScheduling extends ITableBase {
   carriger_plate: string;
   container_type: string;
   container_code: string;
-  type_load: "CHEIO" | "VAZIO";
+  type_load: type_load;
   demurrage: string;
   temperature: number;
 }
 
+//COMPANY
 export interface ICompany extends ITableBase {
   code: string;
   name: string;
@@ -39,12 +61,13 @@ export interface ICompany extends ITableBase {
   update_at?: string;
 }
 
-export interface IResponseArrayErrorData {
-  message: [IResponseErrorData];
-}
-
-export interface IResponseErrorData {
-  message: string;
+export interface ICompanyEndpoint extends ITableBase {
+  companyId: string;
+  endpoint: string;
+  method: type_method;
+  origin: type_origin;
+  create_at: string;
+  update_at: string;
 }
 
 export interface IPayloadJWT {
@@ -60,14 +83,3 @@ export interface IPayloadJWTUser {
   name: string;
   role: type_role;
 }
-
-export type type_role = "ADMIN" | "CLIENTE" | "USUARIO";
-
-export type typeMask =
-  | "cep"
-  | "cpf"
-  | "cnpj"
-  | "date"
-  | "tel"
-  | "cel"
-  | undefined;

@@ -1,26 +1,26 @@
-import { Button } from "@mantine/core";
+import clsx from "clsx";
+import { Button } from "../button";
 
 type FormButtonPaletteProps = {
-  isSubmitting: boolean,
-  className?: string
-}
+  isSubmitting: boolean;
+  className?: string;
+};
 
-export function FormButtonPalette(props: FormButtonPaletteProps) {  
-  return(
-    <div className={"flex flex-col mt-4 " + props.className}>
-      <div className="border-t w-full pb-4" />
-  
-      <div className="">
+export function FormButtonPalette(props: FormButtonPaletteProps) {
+  return (
+    <div className={clsx("flex flex-col mt-4", props.className)}>
+      <div className="border-t w-full pb-4 dark:border-t-gray-600" />
+
+      <div className="flex justify-end">
         <Button
-          type="submit" 
-          loading={props.isSubmitting} 
-          loaderProps={{ type: 'dots' }} 
-          className="w-full bg-gray-800 hover:bg-gray-700"
+          type="submit"
+          isLoaling={props.isSubmitting}
           disabled={props.isSubmitting}
+          isDefaultStyle
         >
           Salvar
         </Button>
       </div>
     </div>
-  )
+  );
 }

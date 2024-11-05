@@ -1,4 +1,5 @@
 import * as z from "zod";
+import * as Tabs from "@radix-ui/react-tabs";
 
 import { PageLayout } from "@/components/layout/page-layout";
 import { FormLayout } from "@/components/layout/form-layout";
@@ -13,6 +14,9 @@ import { Input } from "@/components/input";
 import { useContext, useState } from "react";
 import { AxiosError } from "axios";
 import { AppContext } from "@/contexts/app-context";
+import { TabTrigger } from "@/components/tabs/trigger";
+import { CompanyEndpointView } from "./endpoint/view";
+//import { CompanyEndpointView } from "./view-endpoint";
 
 const schema = z
   .object({
@@ -25,9 +29,10 @@ const schema = z
 
 export function CompanyView() {
   const companyAPI = new CompanyAPI();
-  const { user } = useContext(AppContext);
-  const { paramId } = useParams();
   const navigate = useNavigate();
+
+  const { paramId } = useParams();
+  const { user } = useContext(AppContext);
   const [error, setError] = useState<string>();
 
   const form = useForm<ICompany>({
@@ -58,7 +63,11 @@ export function CompanyView() {
       )}
 
       <FormProvider {...form}>
-        <FormLayout messageError={error} funcClearError={setError}>
+        <FormLayout
+          title="EMPRESA"
+          messageError={error}
+          funcClearError={setError}
+        >
           <form
             id="form-viewuser"
             className="flex flex-col items-center"
@@ -92,6 +101,18 @@ export function CompanyView() {
           </form>
         </FormLayout>
       </FormProvider>
+
+      <Tabs.Root defaultValue="endpoint" className="mt-4">
+        <Tabs.List>
+          <TabTrigger value="endpoint">Endpoint</TabTrigger>
+        </Tabs.List>
+        <Tabs.Content
+          className="border shadow-sm dark:border-gray-600"
+          value="endpoint"
+        >
+          {paramId && <CompanyEndpointView companyId={paramId} />}
+        </Tabs.Content>
+      </Tabs.Root>
     </PageLayout>
   );
 }

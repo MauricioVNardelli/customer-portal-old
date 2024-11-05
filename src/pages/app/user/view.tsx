@@ -81,7 +81,11 @@ export function UserView() {
       />
 
       <FormProvider {...form}>
-        <FormLayout messageError={error} funcClearError={setError}>
+        <FormLayout
+          title="USUARIO"
+          messageError={error}
+          funcClearError={setError}
+        >
           <form
             id="form-viewuser"
             className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4"
@@ -113,7 +117,7 @@ export function UserView() {
             <Select
               label="Situação"
               data={const_status}
-              className="md:col-span-2"
+              className="sm:col-span-2"
               {...form.register("status")}
             />
 

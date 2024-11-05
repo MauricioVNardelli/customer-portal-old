@@ -1,4 +1,4 @@
-import { typeMask } from "@/lib/definitions";
+import { typeMask } from "@/lib/constants";
 import clsx from "clsx";
 import { forwardRef } from "react";
 
@@ -26,9 +26,9 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(function (
             //disable
             props.disabled && "text-gray-400 dark:text-gray-600",
             //event
-            "focus:border-slate-500 focus:border-b-1 dark:focus:border-gray-500",
+            "focus:border-gray-800 dark:focus:border-gray-500",
             //dark
-            "dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700"
+            "dark:text-gray-300 dark:bg-gray-800 dark:border-gray-700"
           )}
           {...otherProps}
         />
