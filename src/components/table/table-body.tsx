@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { MouseEvent, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { IconLoader, IconTrash } from "@tabler/icons-react";
 import { THeaderColumn } from "./table-head";
+import { LoaderIcon, TrashIcon } from "lucide-react";
 
 export interface ITableBodyProps {
   columns: THeaderColumn[];
@@ -67,10 +67,10 @@ export function Body(props: ITableBodyProps) {
               {props.hasDelete && (
                 <td className="flex justify-center p-2">
                   {isPending && value["id"] == pendingId ? (
-                    <IconLoader className="animate-spin mr-1 text-gray-400" />
+                    <LoaderIcon className="animate-spin mr-1 text-gray-400" />
                   ) : (
                     <button onClick={() => handleRemoveClick(value)}>
-                      <IconTrash className="text-end text-gray-400 hover:text-red-700" />
+                      <TrashIcon className="text-end text-gray-400 hover:text-red-700" />
                     </button>
                   )}
                 </td>

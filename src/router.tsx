@@ -1,8 +1,8 @@
-import MiddlewareAuth from "@/pages/auth/middleware-auth";
+import MiddlewareAuth from "@/pages/middleware";
 
 import { createBrowserRouter } from "react-router-dom";
 
-import { Home } from "@/pages/site";
+//import { Home } from "@/pages/site";
 
 import { LayoutApp } from "@/pages/app/_layouts/app";
 import { PageNotFound } from "@/pages/error/404";
@@ -22,17 +22,13 @@ import { CompanyView } from "@/pages/app/company/view";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/auth/:companyCode",
-    element: <SignIn />,
-  },
-  {
-    path: "/app",
     element: <MiddlewareAuth />,
     errorElement: <PageNotFound />,
     children: [
+      {
+        path: "/auth/:companyCode",
+        element: <SignIn />,
+      },
       {
         path: "/app",
         element: <LayoutApp />,

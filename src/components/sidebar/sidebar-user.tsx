@@ -1,10 +1,10 @@
-import { IconLogout2 } from "@tabler/icons-react";
 import { Avatar, Menu, Modal } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ModalChangePassword } from "./modal-change-password";
 import { SidebarContext } from "@/pages/app/_layouts/app";
 import { AppContext } from "@/contexts/app-context";
+import { LogOutIcon } from "lucide-react";
 
 export function SidebarUser() {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ export function SidebarUser() {
 
           <Menu.Item
             color="red"
-            leftSection={<IconLogout2 className="w-5 h-5" />}
+            leftSection={<LogOutIcon className="w-5 h-5" />}
             onClick={ExitHandle}
           >
             Sair

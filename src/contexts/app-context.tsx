@@ -47,7 +47,7 @@ export function AppProvider({ children }: AppProviderProps) {
 
     setCookie(null, "authorization", prToken, {
       expires: new Date(payload.exp * 1000),
-      path: "/app",
+      path: "/",
     });
 
     localStorage.setItem("companyCode", payload.user.companyCode);

@@ -1,9 +1,9 @@
 import { Button, PasswordInput } from "@mantine/core";
-import { IconInfoCircle, IconLock } from "@tabler/icons-react";
 import { FocusEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTimeout } from "@mantine/hooks";
 import { UserAPI } from "@/api/users";
+import { CircleIcon, LockIcon } from "lucide-react";
 
 type IInput = {
   password: string;
@@ -75,7 +75,7 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
           className="w-full mb-4"
           placeholder="Senha atual"
           type="password"
-          leftSection={<IconLock size={16} />}
+          leftSection={<LockIcon size={16} />}
           onBlur={onBlurPassword}
           error={errors.password?.message}
           disabled={correctPass}
@@ -86,7 +86,7 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
           className="w-full mb-4"
           placeholder="Nova senha"
           type="password"
-          leftSection={<IconLock size={16} />}
+          leftSection={<LockIcon size={16} />}
           disabled={!correctPass}
         />
 
@@ -95,7 +95,7 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
           className="w-full mb-4"
           placeholder="Confirmar senha"
           type="password"
-          leftSection={<IconLock size={16} />}
+          leftSection={<LockIcon size={16} />}
           disabled={!correctPass}
         />
 
@@ -111,7 +111,7 @@ export function ModalChangePassword(props: ModalChangePasswordProps) {
 
         {errors.newPassword?.message ? (
           <div className="flex flex-row items-center my-4">
-            <IconInfoCircle className="text-red-500 mr-4" size={20} />
+            <CircleIcon className="text-red-500 mr-4" size={20} />
             <h1 className="">{errors.newPassword?.message}</h1>
           </div>
         ) : (

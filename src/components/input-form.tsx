@@ -1,4 +1,4 @@
-import { typeMask } from "@/lib/definitions";
+import { typeMask } from "@/lib/constants";
 import { GetMask } from "@/lib/utils";
 import { TextInput, TextInputProps } from "@mantine/core";
 import { MaskitoOptions } from "@maskito/core";

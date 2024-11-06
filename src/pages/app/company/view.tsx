@@ -15,8 +15,6 @@ import { useContext, useState } from "react";
 import { AxiosError } from "axios";
 import { AppContext } from "@/contexts/app-context";
 import { TabTrigger } from "@/components/tabs/trigger";
-import { CompanyEndpointView } from "./endpoint/view";
-//import { CompanyEndpointView } from "./view-endpoint";
 
 const schema = z
   .object({
@@ -35,16 +33,24 @@ export function CompanyView() {
   const { user } = useContext(AppContext);
   const [error, setError] = useState<string>();
 
+  const isInserting = paramId == undefined;
   const form = useForm<ICompany>({
     resolver: zodResolver(schema),
     defaultValues: async () => {
-      return await companyAPI.Get(paramId);
+      let defValue = {
+        name: "",
+        cnpj: "",
+        code: "",
+      } as ICompany;
+      if (paramId) defValue = await companyAPI.Get(paramId);
+
+      return defValue;
     },
   });
 
   async function onSubmit(data: ICompany) {
     try {
-      if (paramId) await companyAPI.Update(paramId, data);
+      if (!isInserting) await companyAPI.Update(paramId, data);
       else await companyAPI.Create(data);
 
       navigate("/app/company");
@@ -76,16 +82,18 @@ export function CompanyView() {
             <div className="grid gap-2 sm:grid-cols-2 w-full mt-4">
               <Input label="Nome" {...form.register("name")} />
               <Input
-                disabled
+                disabled={!isInserting}
                 label="CNPJ"
                 mask="cnpj"
                 {...form.register("cnpj")}
               />
+
               <Input
                 label="URL Logo (max 200 x 200)"
                 className="sm:col-span-2"
                 {...form.register("image")}
               />
+
               <Input
                 label="Código"
                 disabled
@@ -101,8 +109,12 @@ export function CompanyView() {
           </form>
         </FormLayout>
       </FormProvider>
+    </PageLayout>
+  );
+}
 
-      <Tabs.Root defaultValue="endpoint" className="mt-4">
+/*
+<Tabs.Root defaultValue="endpoint" className="mt-4">
         <Tabs.List>
           <TabTrigger value="endpoint">Endpoint</TabTrigger>
         </Tabs.List>
@@ -113,6 +125,4 @@ export function CompanyView() {
           {paramId && <CompanyEndpointView companyId={paramId} />}
         </Tabs.Content>
       </Tabs.Root>
-    </PageLayout>
-  );
-}
+      */

@@ -1,6 +1,6 @@
-import { AreaChart, BarChart, DonutChart } from "@mantine/charts";
-import { IconChartLine } from "@tabler/icons-react";
 import clsx from "clsx";
+import { AreaChart, BarChart, DonutChart } from "@mantine/charts";
+import { ChartNoAxesCombinedIcon } from "lucide-react";
 
 interface ICardValue {
   title?: string;
@@ -31,7 +31,10 @@ export function CardValue(props: ICardValue) {
     >
       <div id="card-title" className="flex flex-row justify-between">
         <h1 className="left text-sm dark:text-white">{props.title}</h1>
-        <IconChartLine className="text-slate-400 size-7" strokeWidth="1" />
+        <ChartNoAxesCombinedIcon
+          className="text-slate-400 size-7"
+          strokeWidth="1"
+        />
       </div>
 
       <div
@@ -59,7 +62,10 @@ function CardChartLayout(props: ICardChartLayout) {
         className="flex flex-row justify-between min-h-10 dark:text-white"
       >
         <h1 className="left text-sm">{props.title}</h1>
-        <IconChartLine className="text-slate-400 size-7" strokeWidth="1" />
+        <ChartNoAxesCombinedIcon
+          className="text-slate-400 size-7"
+          strokeWidth="1"
+        />
       </div>
 
       <div id="card-content" className="h-full items-center justify-center">

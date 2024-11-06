@@ -8,6 +8,7 @@ import { AppContext } from "@/contexts/app-context";
 import { Navigate } from "react-router-dom";
 import { Table } from "@/components/table";
 import { THeaderColumn } from "@/components/table/table-head";
+import { PageButtonPalette } from "@/components/layout/page-buttons-palette";
 
 export function Company() {
   const [data, setData] = useState<ICompany[]>();
@@ -41,6 +42,11 @@ export function Company() {
   if (user?.role == "ADMIN")
     return (
       <PageLayout title="EMPRESA">
+        <PageButtonPalette
+          buttons={[
+            { name: "Incluir", color: "gray", src: "/app/company/view" },
+          ]}
+        />
         <Table columns={headerFields} data={data} />
       </PageLayout>
     );

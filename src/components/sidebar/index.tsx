@@ -1,17 +1,17 @@
-import { SidebarContext } from "@/pages/app/_layouts/app";
-import {
-  IconBuilding,
-  IconCalendarMonth,
-  IconHome,
-  IconMenu2,
-  IconUser,
-  IconX,
-} from "@tabler/icons-react";
 import clsx from "clsx";
-import React, { useContext } from "react";
+import { SidebarContext } from "@/pages/app/_layouts/app";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { SidebarUser } from "./sidebar-user";
 import { AppContext } from "@/contexts/app-context";
+import {
+  BuildingIcon,
+  Calendar1Icon,
+  HomeIcon,
+  MenuIcon,
+  UserIcon,
+  XIcon,
+} from "lucide-react";
 
 type menu = {
   name: string;
@@ -21,11 +21,11 @@ type menu = {
 };
 
 const listMenuCustomer: menu[] = [
-  { name: "Dashboard", src: "/app/dashboard", icon: <IconHome stroke={1.5} /> },
+  { name: "Dashboard", src: "/app/dashboard", icon: <HomeIcon /> },
   {
     name: "Agend. de pátio",
     src: "/app/scheduling",
-    icon: <IconCalendarMonth stroke={1.5} />,
+    icon: <Calendar1Icon />,
   },
 ];
 
@@ -34,13 +34,13 @@ const listMenuAdmin: menu[] = [
     name: "Usuário",
     src: "/app/user",
     isRoutePrivate: true,
-    icon: <IconUser stroke={1.5} />,
+    icon: <UserIcon />,
   },
   {
     name: "Empresa",
     src: "/app/company",
     isRoutePrivate: true,
-    icon: <IconBuilding stroke={1.5} />,
+    icon: <BuildingIcon />,
   },
 ];
 
@@ -78,7 +78,7 @@ export function Sidebar() {
           onClick={() => setSidebarOpen(!isOpenSidebar)}
           className="hover:text-purple-600 hover:dark:text-gray-400"
         >
-          {isOpenSidebar ? <IconX /> : <IconMenu2 />}
+          {isOpenSidebar ? <XIcon /> : <MenuIcon />}
         </button>
       </div>
       <nav

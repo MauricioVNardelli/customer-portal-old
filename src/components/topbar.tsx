@@ -1,5 +1,5 @@
 import { AppContext } from "@/contexts/app-context";
-import { IconMoon, IconSun } from "@tabler/icons-react";
+import { MoonIcon, SunIcon } from "lucide-react";
 import { useContext, useState } from "react";
 
 export function Topbar() {
@@ -24,9 +24,9 @@ export function Topbar() {
       <h1 className="ml-5 text-base text-white">{companyName}</h1>
       <button onClick={handleButtonDarkMode} className="mr-5 text-white">
         {isDarkMode ? (
-          <IconSun onClick={handleButtonDarkMode} />
+          <SunIcon onClick={handleButtonDarkMode} />
         ) : (
-          <IconMoon onClick={handleButtonDarkMode} />
+          <MoonIcon onClick={handleButtonDarkMode} />
         )}
       </button>
     </header>

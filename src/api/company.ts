@@ -1,4 +1,5 @@
-import { ICompany } from "@/lib/definitions";
+import { IAPIResponse, ICompany } from "@/lib/definitions";
+import { TreatError } from "@/lib/utils";
 import { api } from "@/services/api";
 
 const path = "/company";
@@ -32,10 +33,17 @@ export class CompanyAPI {
     return response.data;
   }
 
-  async Create(prCompany: ICompany): Promise<ICompany> {
-    const response = await api.post(path, prCompany);
+  async Create(prData: ICompany): Promise<IAPIResponse> {
+    try {
+      await api.post(path, prData);
 
-    return response.data;
+      return {
+        sucess: true,
+        message: "Registro criado com sucesso",
+      };
+    } catch (error) {
+      return TreatError(error);
+    }
   }
 
   async GetImage(prCompanyCode: string | undefined): Promise<string> {

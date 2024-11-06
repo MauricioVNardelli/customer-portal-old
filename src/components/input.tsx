@@ -1,5 +1,5 @@
-import { typeMask } from "@/lib/constants";
 import clsx from "clsx";
+import { typeMask } from "@/lib/constants";
 import { forwardRef } from "react";
 
 interface IInputProps extends React.ComponentProps<"input"> {
