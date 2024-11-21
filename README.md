@@ -1,6 +1,6 @@
 # Portal de Cliente
 
-Portal de Cliente é uma plataforma desenvolvida em ReactJS com o objetivo de facilitar a interação entre os clientes finais e os sistemas ERP utilizados por empresas. Este projeto permite que os clientes dos nossos clientes realizem solicitações e agendamentos diretamente na plataforma, garantindo eficiência e integração.
+Portal de Cliente é uma plataforma desenvolvida em ReactJS com o objetivo de facilitar a interação entre o cliente final com seu fornecedor.
 
 ## 🚀 Funcionalidades
 * Agendamento de Contêineres: Interface simples e intuitiva para realizar agendamentos.
