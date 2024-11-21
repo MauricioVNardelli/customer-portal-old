@@ -1,30 +1,22 @@
-# React + TypeScript + Vite
+## Portal de Cliente
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portal de Cliente é uma plataforma desenvolvida em ReactJS com o objetivo de facilitar a interação entre os clientes finais e os sistemas ERP utilizados por empresas. Este projeto permite que os clientes dos nossos clientes realizem solicitações e agendamentos diretamente na plataforma, garantindo eficiência e integração.
 
-Currently, two official plugins are available:
+## 🚀 Funcionalidades
+* Agendamento de Contêineres: Interface simples e intuitiva para realizar agendamentos.
+* Dashboard Interativo: Painel com gráficos e indicadores para monitoramento de informações importantes.
+* Gestão de Cadastro: Sistema para registro de usuários, empresas e sistemas associados.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tecnologias Utilizadas
+* ReactJS: Framework para construção da interface do usuário.
+* Vite: Ferramenta para otimização do desenvolvimento.
+* Axios: Gerenciamento de requisições HTTP.
+* TailwindCSS: Estilização rápida e modular.
+* TypeScript: Tipagem estática para maior robustez do código.
+* JWT: Autenticação segura com tokens.
+* Lucide e Sonner: Componentes visuais para ícones e notificações.
+* useHooksTs, Zod e Radix: Auxiliares para validação, acessibilidade e consistência.
+* React Router Dom: Gerenciamento de rotas da aplicação.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🌟 Status
+Este projeto foi descontinuado para dar lugar a uma nova implementação, mesmo conceito mas utilizando o Next.js.
